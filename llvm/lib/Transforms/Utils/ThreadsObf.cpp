@@ -572,7 +572,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
 
   std::string modulePath(
       "thread_code.ll");
-  std::string fctName("?execFunctionsGlobal@@YAHHHHH@Z");
+  std::string fctName("_Z19execFunctionsGlobaliiii");
 
   SMDiagnostic Diag;
   std::unique_ptr<Module> newModule =
@@ -637,7 +637,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
           true, J2->getLinkage(), contestKey, "affe", a4);
       GV->setInitializer(contestKey);
       J2->setInitializer(contest);
-      std::string fctName("?decodeChar@@YAPEADPEAD0H@Z");
+      std::string fctName("_Z10decodeCharPcS_i");
       Function *computeFctExternalModule = M.getFunction(fctName);
       std::vector<Value *> argsVal;
 
