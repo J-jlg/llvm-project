@@ -125,6 +125,7 @@
 #include "llvm/Transforms/Scalar/WarnMissedTransforms.h"
 #include "llvm/Transforms/Utils/AddDiscriminators.h"
 #include "llvm/Transforms/Utils/CFF.h"
+#include "llvm/Transforms/Utils/ThreadsObf.h"
 #include "llvm/Transforms/Utils/AssumeBundleBuilder.h"
 #include "llvm/Transforms/Utils/CanonicalizeAliases.h"
 #include "llvm/Transforms/Utils/CountVisits.h"
@@ -238,6 +239,10 @@ static cl::opt<bool>
 static cl::opt<bool>
     EnableCFF("cff",
                        cl::desc("Enable Control Flow Flattening pass"));
+                       
+static cl::opt<bool>
+    EnableThreadsObf("threadsobf",
+                       cl::desc("Enable icmp+const Thread based Obfuscation (EXPERIMENTAL) pass"));
 
 static cl::opt<bool> EnableIROutliner("ir-outliner", cl::init(false),
                                       cl::Hidden,
@@ -1336,7 +1341,8 @@ void PassBuilder::addVectorPasses(OptimizationLevel Level,
   // Now that we've vectorized and unrolled loops, we may have more refined
   // alignment information, try to re-derive it here.
   FPM.addPass(AlignmentFromAssumptionsPass());
-  
+  if(EnableThreadsObf)
+  	FPM.addPass(ThreadsObfPass());
   if(EnableCFF)
   	FPM.addPass(CFFPass());
   
