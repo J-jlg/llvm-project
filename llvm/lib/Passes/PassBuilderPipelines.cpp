@@ -124,6 +124,7 @@
 #include "llvm/Transforms/Scalar/TailRecursionElimination.h"
 #include "llvm/Transforms/Scalar/WarnMissedTransforms.h"
 #include "llvm/Transforms/Utils/AddDiscriminators.h"
+#include "llvm/Transforms/Utils/CFF.h"
 #include "llvm/Transforms/Utils/AssumeBundleBuilder.h"
 #include "llvm/Transforms/Utils/CanonicalizeAliases.h"
 #include "llvm/Transforms/Utils/CountVisits.h"
@@ -185,6 +186,7 @@ static cl::opt<bool> EnablePostPGOLoopRotation(
 static cl::opt<bool> EnableGlobalAnalyses(
     "enable-global-analyses", cl::init(true), cl::Hidden,
     cl::desc("Enable inter-procedural analyses"));
+    
 
 static cl::opt<bool>
     RunPartialInlining("enable-partial-inlining", cl::init(false), cl::Hidden,
@@ -232,6 +234,10 @@ static cl::opt<bool> EnablePGOForceFunctionAttrs(
 static cl::opt<bool>
     EnableHotColdSplit("hot-cold-split",
                        cl::desc("Enable hot-cold splitting pass"));
+                       
+static cl::opt<bool>
+    EnableCFF("cff",
+                       cl::desc("Enable Control Flow Flattening pass"));
 
 static cl::opt<bool> EnableIROutliner("ir-outliner", cl::init(false),
                                       cl::Hidden,
@@ -1330,6 +1336,10 @@ void PassBuilder::addVectorPasses(OptimizationLevel Level,
   // Now that we've vectorized and unrolled loops, we may have more refined
   // alignment information, try to re-derive it here.
   FPM.addPass(AlignmentFromAssumptionsPass());
+  
+  if(EnableCFF)
+  	FPM.addPass(CFFPass());
+  
 }
 
 ModulePassManager
