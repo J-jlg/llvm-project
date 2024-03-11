@@ -83,6 +83,7 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeX86Target() {
   initializeX86CmovConverterPassPass(PR);
   initializeX86TileConfigPass(PR);
   initializeX86FastPreTileConfigPass(PR);
+  initializeX86InstructionObfuscationPass(PR);
   initializeX86FastTileConfigPass(PR);
   initializeKCFIPass(PR);
   initializeX86LowerTileCopyPass(PR);
@@ -536,6 +537,8 @@ void X86PassConfig::addPreRegAlloc() {
   addPass(createX86FlagsCopyLoweringPass());
   addPass(createX86DynAllocaExpander());
 
+  //sehr wichtig an dieser Stelle, da vor preRegAlloc -> vor stack frame pro-/epilog asm insertion. Ansonsten muesste man den Stack manuell hacky aendern, falls ueberhaupt moeglich???
+  addPass(createX86InstructionObfuscationPass());
   if (getOptLevel() != CodeGenOptLevel::None)
     addPass(createX86PreTileConfigPass());
   else

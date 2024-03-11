@@ -51,6 +51,7 @@ set(sources
   X86FlagsCopyLowering.cpp
   X86FloatingPoint.cpp
   X86FrameLowering.cpp
+  X86InstructionObfuscation.cpp
   X86ISelDAGToDAG.cpp
   X86ISelLowering.cpp
   X86ISelLoweringCall.cpp
