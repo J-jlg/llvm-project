@@ -672,7 +672,7 @@ bool X86InstructionObfuscation::runOnMachineFunction(MachineFunction &MFunc) {
   }
 
   for (auto MI : WorkListADD32) {
-    replaceADD(MI, fpuStoreADD, alADD, aluStackADD);
+    //replaceADD(MI, fpuStoreADD, alADD, aluStackADD);
   }
 
   for (auto MI : WorkListMOV32) {
