@@ -668,14 +668,7 @@ bool X86InstructionObfuscation::runOnMachineFunction(MachineFunction &MFunc) {
 
   for (auto MI : WorkListSUB32) {
   //TODO: use mt19937 -> but compiler error because of ??
-    std::srand(std::time(nullptr));
-    int random_value = std::rand();
-    if (random_value < 0)
-      random_value *= -1;
-    if (random_value%3==0)
-        replaceSub1(MI, fpuStoreSUB, alSUB, aluStackSUB);
-    else
-        replaceSub2(MI, fpuStoreSUB, alSUB, aluStackSUB);
+    replaceSub2(MI, fpuStoreSUB, alSUB, aluStackSUB);
   }
 
   for (auto MI : WorkListADD32) {
@@ -684,16 +677,7 @@ bool X86InstructionObfuscation::runOnMachineFunction(MachineFunction &MFunc) {
 
   for (auto MI : WorkListMOV32) {
   //TODO: use mt19937 -> but compiler error because of ??
-    std::srand(std::time(nullptr));
-    int random_value = std::rand();
-    if (random_value < 0)
-      random_value *= -1;
-    if (random_value%3==0)
-        replaceMov(MI, fpuStore, al, aluStack);
-    else if (random_value%3==1)
-         replaceMov2(MI, fpuStore, al, aluStack);
-    else
-         replaceMov3(MI, fpuStore, al, aluStack);
+    replaceMov3(MI, fpuStore, al, aluStack);
     
   }
   MFunc.print(outs());
