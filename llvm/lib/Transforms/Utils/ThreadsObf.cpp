@@ -520,20 +520,20 @@ int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
     int temp = globalVar1 +5;
     temp *= temp;
     temp %= 2;
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+3));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+10));
     
     std::thread t2(executeFunction, k2);
     temp = globalVar1 + 5;
     temp *= temp;
     temp %= 2;
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+3));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+10));
     t1.join();
     std::thread t3(executeFunction, k3);
     temp = globalVar1 + 5;
     temp *= temp;
     temp %= 2;
     t2.join();
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+3));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+10));
     std::thread t4(executeFunction, k4);
 
     // Auf Beendigung der Threads warten
