@@ -1,44 +1,57 @@
 # The LLVM Compiler Infrastructure
+## build
+How to build:
 
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/llvm/llvm-project/badge)](https://securityscorecards.dev/viewer/?uri=github.com/llvm/llvm-project)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8273/badge)](https://www.bestpractices.dev/projects/8273)
-[![libc++](https://github.com/llvm/llvm-project/actions/workflows/libcxx-build-and-test.yaml/badge.svg?branch=main&event=schedule)](https://github.com/llvm/llvm-project/actions/workflows/libcxx-build-and-test.yaml?query=event%3Aschedule)
+```console
+foo@bar:~$ cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release
+foo@bar:~$ ninja -C build
+```
 
-Welcome to the LLVM project!
+Now you can compile your c++ Code with 
+```console
+foo@bar:~$ /build/bin/clang++ example.cpp -o example
+```
+Note: The MachineFunctionPass on LLVM M(C)IR /llvm/lib/Target/X86/X86InstructionObfuscation.cpp is enabled by default and you cannot disable it with a command flag (TODO: add flag in /llvm/lib/Target/X86/X86TargetMachine.cpp).
 
-This repository contains the source code for LLVM, a toolkit for the
-construction of highly optimized compilers, optimizers, and run-time
-environments.
+## Use the Opt (LLVM IR) Pass
+To use the CFF and/or Thread-Ofuscation Pass you need to compile your c/cpp/... code into LLVM IR to apply the transformations (they work on the LLVM IR "Middle End"/Opt representation)
 
-The LLVM project has multiple components. The core of the project is
-itself called "LLVM". This contains all of the tools, libraries, and header
-files needed to process intermediate representations and convert them into
-object files. Tools include an assembler, disassembler, bitcode analyzer, and
-bitcode optimizer.
+```console
+foo@bar:~$ /build/bin/clang++ example.cpp -S -emit-llvm
+```
 
-C-like languages use the [Clang](https://clang.llvm.org/) frontend. This
-component compiles C, C++, Objective-C, and Objective-C++ code into LLVM bitcode
--- and from there into object files, using LLVM.
+This command directs clang to stop the compilation process after transforming example.cpp into LLVM IR. The execution of this command generates the example.ll file. An .ll file represents the textual LLVM IR (There are other LLVM IR storage formats e.g. Bitcode .bc Files, which stores the textual .ll information in a more memory-effient way).
 
-Other components include:
-the [libc++ C++ standard library](https://libcxx.llvm.org),
-the [LLD linker](https://lld.llvm.org), and more.
+Before you can apply a transformation remove the LLVM IR Metadata (definied by the # symbol) from your Target Function:
+e.g. 
+define dso_local noundef i32 @main() #2 { -> define dso_local noundef i32 @main() {
 
-## Getting the Source Code and Building LLVM
+You need to do this because clang++ example.cpp -S -emit-llvm adds the optnone metaattributes to each function by default. You can see this in your example.ll file by searching for the attribute (search for attributes #Number where Number was the removed number e.g. #2 in the above case). 
 
-Consult the
-[Getting Started with LLVM](https://llvm.org/docs/GettingStarted.html#getting-the-source-code-and-building-llvm)
-page for information on building and running LLVM.
+e.g.
+attributes #2 = { mustprogress noinline norecurse ```optnone```
 
-For information on how to contribute to the LLVM project, please take a look at
-the [Contributing to LLVM](https://llvm.org/docs/Contributing.html) guide.
+(In production you do not need to do this this -> clang/clang++ only attributes optnone if you use -S -emit-llvm)
 
-## Getting in touch
+To apply the transformations:
+```console
+foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=CFF
+```
+(To find out the pass name see:  llvm/lib/Passes/PassRegistry.def)
 
-Join the [LLVM Discourse forums](https://discourse.llvm.org/), [Discord
-chat](https://discord.gg/xS7Z362),
-[LLVM Office Hours](https://llvm.org/docs/GettingInvolved.html#office-hours) or
-[Regular sync-ups](https://llvm.org/docs/GettingInvolved.html#online-sync-ups).
+To view it use either /build/bin/opt example.ll -o example_cff.bc -passes=CFF -print-changed
+or convert the example_cff.bc file into the textual .ll format:
+```console
+foo@bar:~$ /build/bin/llvm-dis example_cff.bc -o example_cff.ll -passes=CFF
+```
 
-The LLVM project has adopted a [code of conduct](https://llvm.org/docs/CodeOfConduct.html) for
-participants to all modes of communication within the project.
+To now compile the .ll or .bc file use clang++ as the compilation driver: 
+```console
+foo@bar:~$ /build/bin/clang++ example_cff.bc -o example_cff
+```
+
+
+
+
+
+

@@ -569,7 +569,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
 
   std::uniform_int_distribution<std::mt19937::result_type> dist20(1, 20);
 
-
+  //TODO: hardcode the thread_code.ll code into a std::string raw textblock. std::string s = R"""(.ll code)""";
   std::string modulePath(
       "thread_code.ll");
   std::string fctName("_Z19execFunctionsGlobaliiii");
@@ -586,7 +586,8 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
           WorkGV.push_back(J2);
         }
       }
-          Linker::linkModules(M, parseIRFile(modulePath, Diag, M.getContext()));
+      //TODO: parseIRFile -> parseFile to use raw string instead of hardcoded file?!
+      Linker::linkModules(M, parseIRFile(modulePath, Diag, M.getContext()));
   }
   
   Function *computeFctOwn = M.getFunction(fctName);
