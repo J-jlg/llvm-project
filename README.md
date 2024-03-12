@@ -13,8 +13,11 @@ foo@bar:~$ /build/bin/clang++ example.cpp -o example
 ```
 Note: The MachineFunctionPass on LLVM M(C)IR /llvm/lib/Target/X86/X86InstructionObfuscation.cpp is enabled by default and you cannot disable it with a command flag (TODO: add flag in /llvm/lib/Target/X86/X86TargetMachine.cpp).
 
+
+If you want to play yourself with the code modiy the /llvm/lib/Target/X86/X86InstructionObfuscation.cpp file. e.g. insert a ``outs() << "hello";``` inside the runOnFunction Methode.
+
 ## Use the Opt (LLVM IR) Pass
-To use the CFF and/or Thread-Ofuscation Pass you need to compile your c/cpp/... code into LLVM IR to apply the transformations (they work on the LLVM IR "Middle End"/Opt representation)
+To use the CFF and/or Thread-Obfuscation Pass you need to compile your c/cpp/... code into LLVM IR to apply the transformations (they work on the LLVM IR "Middle End"/Opt representation)
 
 ```console
 foo@bar:~$ /build/bin/clang++ example.cpp -S -emit-llvm
@@ -24,9 +27,9 @@ This command directs clang to stop the compilation process after transforming ex
 
 Before you can apply a transformation remove the LLVM IR Metadata (definied by the # symbol) from your Target Function:
 e.g. 
-define dso_local noundef i32 @main() #2 { -> define dso_local noundef i32 @main() {
+```define dso_local noundef i32 @main() #2 {``` -> ```define dso_local noundef i32 @main() {```
 
-You need to do this because clang++ example.cpp -S -emit-llvm adds the optnone metaattributes to each function by default. You can see this in your example.ll file by searching for the attribute (search for attributes #Number where Number was the removed number e.g. #2 in the above case). 
+You need to do this because ```clang++ example.cpp -S -emit-llvm``` adds the optnone metaattributes to each function by default. You can see this in your example.ll file by searching for the attribute (search for attributes #Number where Number was the removed number e.g. #2 in the above case). 
 
 e.g.
 attributes #2 = { mustprogress noinline norecurse ```optnone```
