@@ -32,7 +32,6 @@ std::mutex mutex1;
 std::mutex mutex2;
 std::mutex mutex3;
 
-// executeFunction Methode
 void executeFunction(int functionIndex) {
   // Temporäre Variablen für zusätzliche Rechenoperationen
   int temp1 = 0, temp2 = 0, temp3 = 0;
@@ -40,6 +39,7 @@ void executeFunction(int functionIndex) {
   // Dispatcher für die Funktionen basierend auf dem übergebenen Index
   switch (functionIndex) {
   case 1: {
+  mutex1.lock();
     for (int i = 0; i < 5; ++i) {
 
       if (globalVar1 == 0) {
@@ -60,9 +60,11 @@ void executeFunction(int functionIndex) {
     } else {
       globalVar1 -= 5;
     }
+    mutex1.unlock();
     break;
   }
   case 2: {
+  mutex1.lock();
     // Zusätzliche Rechenoperationen am Anfang (längere Ausführungsdauer)
     for (int i = 0; i < 3; ++i) {
       if (globalVar2 % 2 == 0) {
@@ -81,9 +83,11 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
+    mutex1.unlock();
     break;
   }
   case 3: {
+  mutex1.lock();
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
     if (globalVar1 == 123) {
       globalVar1++;
@@ -100,9 +104,11 @@ void executeFunction(int functionIndex) {
       globalVar3 *= 3;
       globalVar2 -= 5;
     }
+    mutex1.unlock();
     break;
   }
   case 4: {
+  mutex1.lock();
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
     int count3 = 0, temp5 = 0;
     while (count3 < 12) {
@@ -124,9 +130,11 @@ void executeFunction(int functionIndex) {
       globalVar2 -= 4;
       globalVar3 += 6;
     }
+    mutex1.unlock();
     break;
   }
   case 5: {
+  mutex1.lock();
     for (int i = 0; i < 1; ++i) {
       if (globalVar1 == 0) {
         globalVar1 += 5;
@@ -145,9 +153,11 @@ void executeFunction(int functionIndex) {
     } else {
       globalVar1 -= 5;
     }
+    mutex1.unlock();
     break;
   }
   case 6: {
+  mutex1.lock();
     for (int i = 0; i < 3; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -165,9 +175,11 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
+    mutex1.unlock();
     break;
   }
   case 7: {
+  mutex1.lock();
     for (int i = 0; i < 4; ++i) {
       if (globalVar3 < 10) {
         globalVar3 += 10;
@@ -180,6 +192,7 @@ void executeFunction(int functionIndex) {
       globalVar1 /= globalVar3;
       globalVar2 -= 5;
     }
+    mutex1.unlock();
     break;
   }
   case 8: {
@@ -190,6 +203,7 @@ void executeFunction(int functionIndex) {
       ++count3;
     }
     int temp4 = temp3 % 2;
+    mutex1.lock();
     // Verzögerung hinzufügen
     // Mutex erst später sperren
     for (int i = 0; i < 2; ++i) {
@@ -205,9 +219,11 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
+    mutex1.unlock();
     break;
   }
   case 9: { // Mutex erst später sperren
+  mutex1.lock();
     for (int i = 0; i < 1; i++) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -225,9 +241,11 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
+    mutex1.unlock();
     break;
   }
   case 10: {
+  mutex1.lock();
     for (int i = 0; i < 5; ++i) {
       if (globalVar1 == 0) {
         globalVar1 += 5;
@@ -247,9 +265,11 @@ void executeFunction(int functionIndex) {
     } else {
       globalVar1 -= 5;
     }
+    mutex1.unlock();
     break;
   }
   case 11: {
+  mutex1.lock();
     for (int i = 0; i < 3; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -267,9 +287,11 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
+    mutex1.unlock();
     break;
   }
   case 12: {
+  mutex1.lock();
     for (int i = 0; i < 1; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -284,11 +306,13 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
+    mutex1.unlock();
     break;
   }
   case 13: {
     // Zusätzliche Rechenoperationen am Anfang (längere Ausführungsdauer)
     // Mutex erst später sperren
+    mutex1.lock();
     for (int i = 0; i < 2; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -306,9 +330,11 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
+    mutex1.unlock();
     break;
   }
   case 14: {
+  mutex1.lock();
     // Zusätzliche Rechenoperationen am Anfang (längere Ausführungsdauer)
     for (int i = 0; i < 3; ++i) {
       if (globalVar2 % 2 == 0) {
@@ -327,11 +353,12 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
+    mutex1.unlock();
     break;
   }
   case 15: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
-
+mutex1.lock();
     for (int i = 0; i < 2; i++) {
       if (globalVar1 < 5) {
         globalVar1 += 5;
@@ -354,11 +381,12 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
+    mutex1.unlock();
     break;
   }
   case 16: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
-
+mutex1.lock();
 
     for (int i = 0; i < 2; ++i) {
       if (globalVar1 < 5) {
@@ -373,6 +401,7 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
+    mutex1.unlock();
     int count3 = 0, temp3 = 0;
     while (count3 < 12) {
       temp3 ^= globalVar2;
@@ -381,14 +410,14 @@ void executeFunction(int functionIndex) {
     }
 
     int temp4 = temp3 % 2;
-
+    
     break;
   }
   case 17: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
-
+mutex1.lock();
     for (int i = 0; i < 2; ++i) {
-
+      
       if (globalVar1 < 5) {
         globalVar1 += 5;
       } else {
@@ -401,20 +430,21 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
+    mutex1.unlock();
     int count3 = 0, temp3 = 0;
     while (count3 < 31) {
       temp3 ^= globalVar2;
       temp3 |= globalVar1;
       ++count3;
     }
-
     int temp4 = temp3 % 2;
 
+    
     break;
   }
   case 18: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
-
+mutex1.lock();
     for (int i = 0; i < 2; ++i) {
       if (globalVar1 < 5) {
         globalVar1 += 5;
@@ -428,6 +458,7 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
+    mutex1.unlock();
     int count3 = 0, temp3 = 0;
     while (count3 < 6) {
       temp3 ^= globalVar2;
@@ -437,10 +468,12 @@ void executeFunction(int functionIndex) {
 
     int temp4 = temp3 % 2;
 
+    
     break;
   }
   case 0: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
+    mutex1.lock();
     for (int i = 0; i < 2; ++i) {
       if (globalVar1 < 5) {
         globalVar1 += 5;
@@ -458,7 +491,8 @@ void executeFunction(int functionIndex) {
       temp3 |= globalVar1;
       ++count3;
     }
-
+mutex1.unlock();
+    
     break;
   }
 
@@ -475,7 +509,7 @@ int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
   llvm::outs() << k1 << "|" << k2 << "|" << k3 << "|" << k4;
   std::map<int, int> counters;
 
-  for (int i = 0; i < 80; i++) {
+  for (int i = 0; i < 15; i++) {
     globalVar1 = 0;
     globalVar2 = 0;
     globalVar3 = 0;
@@ -484,19 +518,19 @@ int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
     int temp = globalVar1 +5;
     temp *= temp;
     temp %= 2;
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+1));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+5));
     std::thread t2(executeFunction, k2);
     temp = globalVar1 + 5;
     temp *= temp;
     temp %= 2;
     t1.join();
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+1));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+5));
     std::thread t3(executeFunction, k3);
     temp = globalVar1 + 5;
     temp *= temp;
     temp %= 2;
     t2.join();
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+1));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+5));
     std::thread t4(executeFunction, k4);
 
     t3.join();
