@@ -668,16 +668,16 @@ bool X86InstructionObfuscation::runOnMachineFunction(MachineFunction &MFunc) {
 
   for (auto MI : WorkListSUB32) {
   //TODO: use mt19937 -> but compiler error because of ??
-    replaceSub2(MI, fpuStoreSUB, alSUB, aluStackSUB);
+    //replaceSub2(MI, fpuStoreSUB, alSUB, aluStackSUB);
   }
 
   for (auto MI : WorkListADD32) {
-    //replaceADD(MI, fpuStoreADD, alADD, aluStackADD);
+   // replaceADD(MI, fpuStoreADD, alADD, aluStackADD);
   }
 
   for (auto MI : WorkListMOV32) {
   //TODO: use mt19937 -> but compiler error because of ??
-    replaceMov3(MI, fpuStore, al, aluStack);
+    //replaceMov3(MI, fpuStore, al, aluStack);
     
   }
   MFunc.print(outs());

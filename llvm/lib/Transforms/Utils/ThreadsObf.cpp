@@ -1,4 +1,5 @@
 #include "llvm/Transforms/Utils/ThreadsObf.h"
+#include "llvm/Transforms/Utils/ThreadHelper.h"
 #include "llvm/ADT/PostOrderIterator.h"
 #include "llvm/ADT/Statistic.h"
 #include "llvm/IR/CFG.h"
@@ -9,15 +10,14 @@
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Transforms/Utils.h"
 #include "llvm/Transforms/Utils/BasicBlockUtils.h"
-#include "llvm/Transforms/Utils/CFF.h"
-#include "llvm/Transforms/Utils/Local.h"
-#include <llvm/IRReader/IRReader.h>
-#include <llvm/Transforms/Utils/Linker.h>
-#include <llvm/Transforms/Utils/Cloning.h>
+#include "llvm/IRReader/IRReader.h"
+#include "llvm/Transforms/Utils/Linker.h"
+#include "llvm/Transforms/Utils/Cloning.h"
 #include <random>
-#include <string>
+#include <utility>
+#include <vector>
+#include <algorithm>
 #include <thread>
-
 #include <iostream>
 #include <map>
 #include <mutex>
@@ -40,7 +40,6 @@ void executeFunction(int functionIndex) {
   // Dispatcher für die Funktionen basierend auf dem übergebenen Index
   switch (functionIndex) {
   case 1: {
-    mutex1.lock();
     for (int i = 0; i < 5; ++i) {
 
       if (globalVar1 == 0) {
@@ -61,12 +60,10 @@ void executeFunction(int functionIndex) {
     } else {
       globalVar1 -= 5;
     }
-    mutex1.unlock();
     break;
   }
   case 2: {
     // Zusätzliche Rechenoperationen am Anfang (längere Ausführungsdauer)
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 3; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -84,12 +81,10 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
-    mutex1.unlock();
     break;
   }
   case 3: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
-    mutex1.lock();
     if (globalVar1 == 123) {
       globalVar1++;
     }
@@ -105,12 +100,10 @@ void executeFunction(int functionIndex) {
       globalVar3 *= 3;
       globalVar2 -= 5;
     }
-    mutex1.unlock();
     break;
   }
   case 4: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
-    mutex1.lock();
     int count3 = 0, temp5 = 0;
     while (count3 < 12) {
       temp5 ^= globalVar2;
@@ -131,11 +124,9 @@ void executeFunction(int functionIndex) {
       globalVar2 -= 4;
       globalVar3 += 6;
     }
-    mutex1.unlock();
     break;
   }
   case 5: {
-    mutex1.lock();
     for (int i = 0; i < 1; ++i) {
       if (globalVar1 == 0) {
         globalVar1 += 5;
@@ -154,11 +145,9 @@ void executeFunction(int functionIndex) {
     } else {
       globalVar1 -= 5;
     }
-    mutex1.unlock();
     break;
   }
   case 6: {
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 3; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -176,11 +165,9 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
-    mutex1.unlock();
     break;
   }
   case 7: {
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 4; ++i) {
       if (globalVar3 < 10) {
         globalVar3 += 10;
@@ -193,11 +180,9 @@ void executeFunction(int functionIndex) {
       globalVar1 /= globalVar3;
       globalVar2 -= 5;
     }
-    mutex1.unlock();
     break;
   }
   case 8: {
-    mutex1.lock();
     int count3 = 0, temp3 = 0;
     while (count3 < 100) {
       temp3 ^= globalVar2;
@@ -220,11 +205,9 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
-    mutex1.unlock();
     break;
   }
   case 9: { // Mutex erst später sperren
-    mutex1.lock();
     for (int i = 0; i < 1; i++) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -242,11 +225,9 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
-    mutex1.unlock();
     break;
   }
   case 10: {
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 5; ++i) {
       if (globalVar1 == 0) {
         globalVar1 += 5;
@@ -266,11 +247,9 @@ void executeFunction(int functionIndex) {
     } else {
       globalVar1 -= 5;
     }
-    mutex1.unlock();
     break;
   }
   case 11: {
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 3; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -288,11 +267,9 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
-    mutex1.unlock();
     break;
   }
   case 12: {
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 1; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -307,12 +284,10 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
-    mutex1.unlock();
     break;
   }
   case 13: {
     // Zusätzliche Rechenoperationen am Anfang (längere Ausführungsdauer)
-    mutex1.lock();
     // Mutex erst später sperren
     for (int i = 0; i < 2; ++i) {
       if (globalVar2 % 2 == 0) {
@@ -331,12 +306,10 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
-    mutex1.unlock();
     break;
   }
   case 14: {
     // Zusätzliche Rechenoperationen am Anfang (längere Ausführungsdauer)
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 3; ++i) {
       if (globalVar2 % 2 == 0) {
         globalVar2 -= 3;
@@ -354,13 +327,11 @@ void executeFunction(int functionIndex) {
       globalVar1 -= globalVar3;
       globalVar3 += 10;
     }
-    mutex1.unlock();
     break;
   }
   case 15: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
 
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 2; i++) {
       if (globalVar1 < 5) {
         globalVar1 += 5;
@@ -383,13 +354,11 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
-    mutex1.unlock();
     break;
   }
   case 16: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
 
-    mutex1.lock(); // Mutex erst später sperren
 
     for (int i = 0; i < 2; ++i) {
       if (globalVar1 < 5) {
@@ -404,7 +373,6 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
-    mutex1.unlock();
     int count3 = 0, temp3 = 0;
     while (count3 < 12) {
       temp3 ^= globalVar2;
@@ -419,7 +387,6 @@ void executeFunction(int functionIndex) {
   case 17: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
 
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 2; ++i) {
 
       if (globalVar1 < 5) {
@@ -434,7 +401,6 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
-    mutex1.unlock();
     int count3 = 0, temp3 = 0;
     while (count3 < 31) {
       temp3 ^= globalVar2;
@@ -449,7 +415,6 @@ void executeFunction(int functionIndex) {
   case 18: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
 
-    mutex1.lock(); // Mutex erst später sperren
     for (int i = 0; i < 2; ++i) {
       if (globalVar1 < 5) {
         globalVar1 += 5;
@@ -463,7 +428,6 @@ void executeFunction(int functionIndex) {
       globalVar3 += 6;
       globalVar1 /= 3;
     }
-    mutex1.unlock();
     int count3 = 0, temp3 = 0;
     while (count3 < 6) {
       temp3 ^= globalVar2;
@@ -477,7 +441,6 @@ void executeFunction(int functionIndex) {
   }
   case 0: {
     // Zusätzliche Rechenoperationen am Anfang (noch längere Ausführungsdauer)
-    mutex1.lock();
     for (int i = 0; i < 2; ++i) {
       if (globalVar1 < 5) {
         globalVar1 += 5;
@@ -489,7 +452,6 @@ void executeFunction(int functionIndex) {
       globalVar2 -= 4;
       globalVar3 += 6;
     }
-    mutex1.unlock();
     int count3 = 0, temp3 = 0;
     while (count3 < 1) {
       temp3 ^= globalVar2;
@@ -504,14 +466,16 @@ void executeFunction(int functionIndex) {
     std::cerr << "Ungültiger Funktionindex!" << std::endl;
   }
 }
+
 // oder void und direkt globale variable auslesen? Hilft vielleicht für das
 // inlinen, falls nur void geht
 int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
   // 10mal ausfüren
 
+  llvm::outs() << k1 << "|" << k2 << "|" << k3 << "|" << k4;
   std::map<int, int> counters;
 
-  for (int i = 0; i < 25; i++) {
+  for (int i = 0; i < 80; i++) {
     globalVar1 = 0;
     globalVar2 = 0;
     globalVar3 = 0;
@@ -520,23 +484,20 @@ int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
     int temp = globalVar1 +5;
     temp *= temp;
     temp %= 2;
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+10));
-    
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+1));
     std::thread t2(executeFunction, k2);
     temp = globalVar1 + 5;
     temp *= temp;
     temp %= 2;
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+10));
     t1.join();
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+1));
     std::thread t3(executeFunction, k3);
     temp = globalVar1 + 5;
     temp *= temp;
     temp %= 2;
     t2.join();
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+10));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+1));
     std::thread t4(executeFunction, k4);
-
-    // Auf Beendigung der Threads warten
 
     t3.join();
     t4.join();
@@ -549,8 +510,6 @@ int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
       [](const std::pair<int, int> &a, const std::pair<int, int> &b) -> bool {
         return a.second < b.second;
       });
-  // c++ hashmap...
-
   return best->first;
 }
 
@@ -570,13 +529,13 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
   std::uniform_int_distribution<std::mt19937::result_type> dist20(1, 20);
 
   //TODO: hardcode the thread_code.ll code into a std::string raw textblock. std::string s = R"""(.ll code)""";
-  std::string modulePath(
-      "thread_code.ll");
   std::string fctName("_Z19execFunctionsGlobaliiii");
 
   SMDiagnostic Diag;
+  StringRef ref = StringRef(ThreadHelper::thread_code.c_str());
+  std::unique_ptr<MemoryBuffer> buff = MemoryBuffer::getMemBuffer(ref);
   std::unique_ptr<Module> newModule =
-      parseIRFile(modulePath, Diag, M.getContext());
+      parseIR(*buff, Diag, M.getContext());
 
   Function *computeFctExternalModule = M.getFunction(fctName);
   if (computeFctExternalModule == nullptr) {
@@ -587,7 +546,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
         }
       }
       //TODO: parseIRFile -> parseFile to use raw string instead of hardcoded file?!
-      Linker::linkModules(M, parseIRFile(modulePath, Diag, M.getContext()));
+      Linker::linkModules(M, std::move(newModule));
   }
   
   Function *computeFctOwn = M.getFunction(fctName);
@@ -658,6 +617,12 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       }
     }
   }
+  std::vector<Value *> argsValAntiDB;
+  std::string antiDBFctName("_Z6antiDBv");
+  Function *computeFctAntiDBExternalModule = M.getFunction(antiDBFctName);
+  builder.SetInsertPoint(F.getEntryBlock().getFirstNonPHIOrDbg());
+          Value *ptrCallInstAntiDB =
+              builder.CreateCall(computeFctAntiDBExternalModule, argsValAntiDB);
 
   for (CallInst *call : WorkListCall) {
     builder.SetInsertPoint(call->getNextNode());
@@ -751,6 +716,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       in4SubRem->insertAfter(in4SubBO);
 
       argsVal.push_back(in4SubRem);
+
 
       ArrayRef<Value *> args(argsVal);
       CallInst *callThreads = builder.CreateCall(computeFctOwn, args);
@@ -887,7 +853,6 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
           "diffSub");
       diffSub->insertBefore(I);
       I->setOperand(0, diffSub);
-      outs() << "fast exit";
       continue;
     }
 
@@ -935,7 +900,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
 
         argsVal.push_back(in4SubRem);
       }
-
+      
       ArrayRef<Value *> args(argsVal);
       CallInst *callThreads = builder.CreateCall(computeFctOwn, args);
 
@@ -944,7 +909,6 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
                                                    (constantDest - in3Sub) % 17,
                                                    (constantDest - 0) % 17) -
                                valueDest;
-
       BinaryOperator *diffSub = BinaryOperator::Create(
           BinaryOperator::Sub, callThreads,
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()),
@@ -984,7 +948,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
     in4SubRem->insertBefore(I);
 
     argsVal.push_back(in4SubRem);
-
+    
     ArrayRef<Value *> args(argsVal);
     CallInst *callThreads = builder.CreateCall(computeFctOwn, args);
     int64_t execFunResult = execFunctionsGlobal(
