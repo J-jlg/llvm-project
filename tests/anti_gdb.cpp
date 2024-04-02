@@ -488,14 +488,12 @@ mutex1.unlock();
     std::cerr << "Ungültiger Funktionindex!" << std::endl;
   }
 }
-// oder void und direkt globale variable auslesen? Hilft vielleicht für das
-// inlinen, falls nur void geht
-int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
+int execFunctionsGlobalAntiDB(int k1, int k2, int k3, int k4, int rounds) {
   // 10mal ausfüren
 
   std::map<int, int> counters;
 
-  for (int i = 0; i < 15; i++) {
+  for (int i = 0; i < rounds; i++) {
     globalVar1 = 0;
     globalVar2 = 0;
     globalVar3 = 0;
@@ -504,24 +502,23 @@ int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
     int temp = globalVar1 +5;
     temp *= temp;
     temp %= 2;
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+5));
     std::thread t2(executeFunction, k2);
     temp = globalVar1 + 5;
     temp *= temp;
     temp %= 2;
-    t1.join();
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+5));
     std::thread t3(executeFunction, k3);
     temp = globalVar1 + 5;
     temp *= temp;
     temp %= 2;
-    t2.join();
-    std::this_thread::sleep_for(std::chrono::nanoseconds(temp+5));
     std::thread t4(executeFunction, k4);
 
+    // Auf Beendigung der Threads warten
+
+    t1.join();    
+    t2.join();
     t3.join();
     t4.join();
-    if (globalVar1 < 0)
+	if (globalVar1 < 0)
       globalVar1 = globalVar1 * (-1);
     counters[globalVar1 % 600] = counters[globalVar1 % 600] + 1;
   }
