@@ -51,7 +51,7 @@ foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=threadsobf
 To view it use either /build/bin/opt example.ll -o example_cff.bc -passes=CFF -print-changed
 or convert the example_cff.bc file into the textual .ll format:
 ```console
-foo@bar:~$ /build/bin/llvm-dis example_cff.bc -o example_cff.ll -passes=CFF
+foo@bar:~$ /build/bin/llvm-dis example_cff.bc -o example_cff.ll
 ```
 
 To now compile the .ll or .bc file use clang++ as the compilation driver: 
