@@ -40,6 +40,12 @@ To apply the transformations:
 ```console
 foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=CFF
 ```
+or
+```console
+foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=threadsobf
+```
+
+
 (To find out the pass name see:  llvm/lib/Passes/PassRegistry.def)
 
 To view it use either /build/bin/opt example.ll -o example_cff.bc -passes=CFF -print-changed
