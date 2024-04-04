@@ -282,6 +282,7 @@
 #include "llvm/Transforms/Utils/LowerSwitch.h"
 #include "llvm/Transforms/Utils/CFF.h"
 #include "llvm/Transforms/Utils/ThreadsObf.h"
+#include "llvm/Transforms/Utils/AntiDB.h"
 #include "llvm/Transforms/Utils/Mem2Reg.h"
 #include "llvm/Transforms/Utils/MetaRenamer.h"
 #include "llvm/Transforms/Utils/MoveAutoInit.h"

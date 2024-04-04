@@ -82,6 +82,7 @@ add_llvm_component_library(LLVMTransformUtils
   StripNonLineTableDebugInfo.cpp
   SymbolRewriter.cpp
   ThreadsObf.cpp
+  AntiDB.cpp
   LinkModules.cpp
   UnifyFunctionExitNodes.cpp
   UnifyLoopExits.cpp

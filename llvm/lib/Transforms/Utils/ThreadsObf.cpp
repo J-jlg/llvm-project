@@ -651,12 +651,6 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       }
     }
   }
-  std::vector<Value *> argsValAntiDB;
-  std::string antiDBFctName("_Z6antiDBv");
-  Function *computeFctAntiDBExternalModule = M.getFunction(antiDBFctName);
-  builder.SetInsertPoint(F.getEntryBlock().getFirstNonPHIOrDbg());
-          Value *ptrCallInstAntiDB =
-              builder.CreateCall(computeFctAntiDBExternalModule, argsValAntiDB);
 
   for (CallInst *call : WorkListCall) {
     builder.SetInsertPoint(call->getNextNode());

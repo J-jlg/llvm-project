@@ -126,6 +126,7 @@
 #include "llvm/Transforms/Utils/AddDiscriminators.h"
 #include "llvm/Transforms/Utils/CFF.h"
 #include "llvm/Transforms/Utils/ThreadsObf.h"
+#include "llvm/Transforms/Utils/AntiDB.h"
 #include "llvm/Transforms/Utils/AssumeBundleBuilder.h"
 #include "llvm/Transforms/Utils/CanonicalizeAliases.h"
 #include "llvm/Transforms/Utils/CountVisits.h"
@@ -235,6 +236,10 @@ static cl::opt<bool> EnablePGOForceFunctionAttrs(
 static cl::opt<bool>
     EnableHotColdSplit("hot-cold-split",
                        cl::desc("Enable hot-cold splitting pass"));
+                       
+static cl::opt<bool>
+    EnableAntiDB("antiDB",
+                       cl::desc("Enable Anti Debugger (gdb)"));
                        
 static cl::opt<bool>
     EnableCFF("cff",
@@ -1345,6 +1350,8 @@ void PassBuilder::addVectorPasses(OptimizationLevel Level,
   	FPM.addPass(ThreadsObfPass());
   if(EnableCFF)
   	FPM.addPass(CFFPass());
+  if(EnableAntiDB)
+  	FPM.addPass(AntiDBPass());
   
 }
 
