@@ -1179,75 +1179,75 @@ define dso_local void @_Z6antiDBv() #1 {
   %4 = alloca i32, align 4
   %5 = alloca i32, align 4
   %6 = alloca i32, align 4
+  %7 = alloca i32, align 4
+  %8 = alloca i32, align 4
+  %9 = alloca i32, align 4
   store i32 0, ptr %1, align 4
-  br label %7
+  br label %10
 
-7:                                                ; preds = %42, %0
-  %8 = load i32, ptr %1, align 4
-  %9 = icmp slt i32 %8, 10
-  br i1 %9, label %10, label %45
-
-10:                                               ; preds = %7
+10:                                               ; preds = %45, %0
   %11 = load i32, ptr %1, align 4
-  %12 = add nsw i32 0, %11
-  %13 = srem i32 %12, 2
+  %12 = icmp slt i32 %11, 10
+  br i1 %12, label %13, label %48
+
+13:                                               ; preds = %10
   %14 = load i32, ptr %1, align 4
-  %15 = add nsw i32 1, %14
+  %15 = add nsw i32 0, %14
   %16 = srem i32 %15, 2
   %17 = load i32, ptr %1, align 4
-  %18 = add nsw i32 0, %17
+  %18 = add nsw i32 1, %17
   %19 = srem i32 %18, 2
   %20 = load i32, ptr %1, align 4
-  %21 = add nsw i32 2, %20
+  %21 = add nsw i32 0, %20
   %22 = srem i32 %21, 2
-  %23 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %13, i32 noundef %16, i32 noundef %19, i32 noundef %22)
-  store i32 %23, ptr %2, align 4
-  %24 = load i32, ptr %1, align 4
-  %25 = add nsw i32 0, %24
-  %26 = srem i32 %25, 2
+  %23 = load i32, ptr %1, align 4
+  %24 = add nsw i32 2, %23
+  %25 = srem i32 %24, 2
+  %26 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %16, i32 noundef %19, i32 noundef %22, i32 noundef %25)
+  store i32 %26, ptr %2, align 4
   %27 = load i32, ptr %1, align 4
-  %28 = add nsw i32 1, %27
+  %28 = add nsw i32 0, %27
   %29 = srem i32 %28, 2
   %30 = load i32, ptr %1, align 4
-  %31 = add nsw i32 0, %30
+  %31 = add nsw i32 1, %30
   %32 = srem i32 %31, 2
   %33 = load i32, ptr %1, align 4
-  %34 = add nsw i32 2, %33
+  %34 = add nsw i32 0, %33
   %35 = srem i32 %34, 2
-  %36 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %26, i32 noundef %29, i32 noundef %32, i32 noundef %35)
-  store i32 %36, ptr %3, align 4
-  %37 = load i32, ptr %2, align 4
-  %38 = load i32, ptr %3, align 4
-  %39 = icmp ne i32 %37, %38
-  br i1 %39, label %40, label %41
+  %36 = load i32, ptr %1, align 4
+  %37 = add nsw i32 2, %36
+  %38 = srem i32 %37, 2
+  %39 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %29, i32 noundef %32, i32 noundef %35, i32 noundef %38)
+  store i32 %39, ptr %3, align 4
+  %40 = load i32, ptr %2, align 4
+  %41 = load i32, ptr %3, align 4
+  %42 = icmp ne i32 %40, %41
+  br i1 %42, label %43, label %44
 
-40:                                               ; preds = %10
-  br label %85
+43:                                               ; preds = %13
+  br label %127
 
-41:                                               ; preds = %10
-  br label %42
+44:                                               ; preds = %13
+  br label %45
 
-42:                                               ; preds = %41
-  %43 = load i32, ptr %1, align 4
-  %44 = add nsw i32 %43, 1
-  store i32 %44, ptr %1, align 4
-  br label %7, !llvm.loop !15
+45:                                               ; preds = %44
+  %46 = load i32, ptr %1, align 4
+  %47 = add nsw i32 %46, 1
+  store i32 %47, ptr %1, align 4
+  br label %10, !llvm.loop !15
 
-45:                                               ; preds = %7
+48:                                               ; preds = %10
   store i32 0, ptr %4, align 4
-  br label %46
+  br label %49
 
-46:                                               ; preds = %81, %45
-  %47 = load i32, ptr %4, align 4
-  %48 = icmp slt i32 %47, 10
-  br i1 %48, label %49, label %84
-
-49:                                               ; preds = %46
+49:                                               ; preds = %84, %48
   %50 = load i32, ptr %4, align 4
-  %51 = add nsw i32 1, %50
-  %52 = srem i32 %51, 2
+  %51 = icmp slt i32 %50, 10
+  br i1 %51, label %52, label %87
+
+52:                                               ; preds = %49
   %53 = load i32, ptr %4, align 4
-  %54 = add nsw i32 2, %53
+  %54 = add nsw i32 0, %53
   %55 = srem i32 %54, 2
   %56 = load i32, ptr %4, align 4
   %57 = add nsw i32 1, %56
@@ -1255,13 +1255,13 @@ define dso_local void @_Z6antiDBv() #1 {
   %59 = load i32, ptr %4, align 4
   %60 = add nsw i32 0, %59
   %61 = srem i32 %60, 2
-  %62 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %52, i32 noundef %55, i32 noundef %58, i32 noundef %61)
-  store i32 %62, ptr %5, align 4
-  %63 = load i32, ptr %4, align 4
-  %64 = add nsw i32 1, %63
-  %65 = srem i32 %64, 2
+  %62 = load i32, ptr %4, align 4
+  %63 = add nsw i32 2, %62
+  %64 = srem i32 %63, 2
+  %65 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %55, i32 noundef %58, i32 noundef %61, i32 noundef %64)
+  store i32 %65, ptr %5, align 4
   %66 = load i32, ptr %4, align 4
-  %67 = add nsw i32 2, %66
+  %67 = add nsw i32 0, %66
   %68 = srem i32 %67, 2
   %69 = load i32, ptr %4, align 4
   %70 = add nsw i32 1, %69
@@ -1269,30 +1269,88 @@ define dso_local void @_Z6antiDBv() #1 {
   %72 = load i32, ptr %4, align 4
   %73 = add nsw i32 0, %72
   %74 = srem i32 %73, 2
-  %75 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %65, i32 noundef %68, i32 noundef %71, i32 noundef %74)
-  store i32 %75, ptr %6, align 4
-  %76 = load i32, ptr %5, align 4
-  %77 = load i32, ptr %6, align 4
-  %78 = icmp ne i32 %76, %77
-  br i1 %78, label %79, label %80
+  %75 = load i32, ptr %4, align 4
+  %76 = add nsw i32 2, %75
+  %77 = srem i32 %76, 2
+  %78 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %68, i32 noundef %71, i32 noundef %74, i32 noundef %77)
+  store i32 %78, ptr %6, align 4
+  %79 = load i32, ptr %5, align 4
+  %80 = load i32, ptr %6, align 4
+  %81 = icmp ne i32 %79, %80
+  br i1 %81, label %82, label %83
 
-79:                                               ; preds = %49
-  br label %85
+82:                                               ; preds = %52
+  br label %127
 
-80:                                               ; preds = %49
-  br label %81
+83:                                               ; preds = %52
+  br label %84
 
-81:                                               ; preds = %80
-  %82 = load i32, ptr %4, align 4
-  %83 = add nsw i32 %82, 1
-  store i32 %83, ptr %4, align 4
-  br label %46, !llvm.loop !16
+84:                                               ; preds = %83
+  %85 = load i32, ptr %4, align 4
+  %86 = add nsw i32 %85, 1
+  store i32 %86, ptr %4, align 4
+  br label %49, !llvm.loop !16
 
-84:                                               ; preds = %46
+87:                                               ; preds = %49
+  store i32 0, ptr %7, align 4
+  br label %88
+
+88:                                               ; preds = %123, %87
+  %89 = load i32, ptr %7, align 4
+  %90 = icmp slt i32 %89, 10
+  br i1 %90, label %91, label %126
+
+91:                                               ; preds = %88
+  %92 = load i32, ptr %7, align 4
+  %93 = add nsw i32 0, %92
+  %94 = srem i32 %93, 2
+  %95 = load i32, ptr %7, align 4
+  %96 = add nsw i32 1, %95
+  %97 = srem i32 %96, 2
+  %98 = load i32, ptr %7, align 4
+  %99 = add nsw i32 0, %98
+  %100 = srem i32 %99, 2
+  %101 = load i32, ptr %7, align 4
+  %102 = add nsw i32 2, %101
+  %103 = srem i32 %102, 2
+  %104 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %94, i32 noundef %97, i32 noundef %100, i32 noundef %103)
+  store i32 %104, ptr %8, align 4
+  %105 = load i32, ptr %7, align 4
+  %106 = add nsw i32 0, %105
+  %107 = srem i32 %106, 2
+  %108 = load i32, ptr %7, align 4
+  %109 = add nsw i32 1, %108
+  %110 = srem i32 %109, 2
+  %111 = load i32, ptr %7, align 4
+  %112 = add nsw i32 0, %111
+  %113 = srem i32 %112, 2
+  %114 = load i32, ptr %7, align 4
+  %115 = add nsw i32 2, %114
+  %116 = srem i32 %115, 2
+  %117 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %107, i32 noundef %110, i32 noundef %113, i32 noundef %116)
+  store i32 %117, ptr %9, align 4
+  %118 = load i32, ptr %8, align 4
+  %119 = load i32, ptr %9, align 4
+  %120 = icmp ne i32 %118, %119
+  br i1 %120, label %121, label %122
+
+121:                                              ; preds = %91
+  br label %127
+
+122:                                              ; preds = %91
+  br label %123
+
+123:                                              ; preds = %122
+  %124 = load i32, ptr %7, align 4
+  %125 = add nsw i32 %124, 1
+  store i32 %125, ptr %7, align 4
+  br label %88, !llvm.loop !17
+
+126:                                              ; preds = %88
   call void @exit(i32 noundef 0) #15
   unreachable
 
-85:                                               ; preds = %79, %40
+127:                                              ; preds = %121, %82, %43
   ret void
 }
 
@@ -1481,7 +1539,7 @@ define internal ptr @"_ZSt13__max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEN9_
   br label %24
 
 24:                                               ; preds = %23, %17
-  br label %14, !llvm.loop !17
+  br label %14, !llvm.loop !18
 
 25:                                               ; preds = %14
   br label %26
@@ -1717,7 +1775,7 @@ define linkonce_odr dso_local void @_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS
   call void @_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS2_E(ptr noundef nonnull align 8 dereferenceable(48) %6, ptr noundef %15) #11
   %16 = load ptr, ptr %5, align 8
   store ptr %16, ptr %4, align 8
-  br label %7, !llvm.loop !18
+  br label %7, !llvm.loop !19
 
 17:                                               ; preds = %7
   ret void
@@ -2693,7 +2751,7 @@ define linkonce_odr dso_local ptr @_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2
   br label %28
 
 28:                                               ; preds = %25, %21
-  br label %11, !llvm.loop !19
+  br label %11, !llvm.loop !20
 
 29:                                               ; preds = %11
   %30 = load ptr, ptr %8, align 8
@@ -3500,7 +3558,7 @@ define linkonce_odr dso_local { ptr, ptr } @_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Sel
 35:                                               ; preds = %32, %29
   %36 = phi ptr [ %31, %29 ], [ %34, %32 ]
   store ptr %36, ptr %6, align 8
-  br label %15, !llvm.loop !20
+  br label %15, !llvm.loop !21
 
 37:                                               ; preds = %15
   %38 = load ptr, ptr %7, align 8
@@ -3787,7 +3845,7 @@ attributes #17 = { noreturn }
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{i32 7, !"frame-pointer", i32 2}
-!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git 7f7a0bc016127d695d9dd0a6f9df8c7755117070)"}
+!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git ff63775077add086f5e2fa4267878321ffbf1429)"}
 !6 = distinct !{!6, !7}
 !7 = !{!"llvm.loop.mustprogress"}
 !8 = distinct !{!8, !7}
@@ -3803,6 +3861,7 @@ attributes #17 = { noreturn }
 !18 = distinct !{!18, !7}
 !19 = distinct !{!19, !7}
 !20 = distinct !{!20, !7}
+!21 = distinct !{!21, !7}
 )""";
 
 #endif // LLVM_TRANSFORMS_UTILS_THREADANTIDBHELPER

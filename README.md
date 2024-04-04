@@ -44,7 +44,10 @@ or
 ```console
 foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=threadsobf
 ```
-
+or
+```console
+foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=antidb
+```
 
 (To find out the pass name see:  llvm/lib/Passes/PassRegistry.def)
 
