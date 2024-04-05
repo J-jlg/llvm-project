@@ -127,6 +127,7 @@
 #include "llvm/Transforms/Utils/CFF.h"
 #include "llvm/Transforms/Utils/ThreadsObf.h"
 #include "llvm/Transforms/Utils/AntiDB.h"
+#include "llvm/Transforms/Utils/AntiDB2.h"
 #include "llvm/Transforms/Utils/AssumeBundleBuilder.h"
 #include "llvm/Transforms/Utils/CanonicalizeAliases.h"
 #include "llvm/Transforms/Utils/CountVisits.h"
@@ -239,7 +240,11 @@ static cl::opt<bool>
                        
 static cl::opt<bool>
     EnableAntiDB("antiDB",
-                       cl::desc("Enable Anti Debugger (gdb)"));
+                       cl::desc("Enable Anti Debugger Variant 1 (gdb)"));
+                       
+static cl::opt<bool>
+    EnableAntiDB2("antiDB2",
+                       cl::desc("Enable Anti Debugger Variant 2 (gdb)"));
                        
 static cl::opt<bool>
     EnableCFF("cff",
@@ -1352,6 +1357,8 @@ void PassBuilder::addVectorPasses(OptimizationLevel Level,
   	FPM.addPass(CFFPass());
   if(EnableAntiDB)
   	FPM.addPass(AntiDBPass());
+  if(EnableAntiDB2)
+  	FPM.addPass(AntiDB2Pass());
   
 }
 

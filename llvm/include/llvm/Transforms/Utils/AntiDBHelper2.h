@@ -1,14 +1,14 @@
-#ifndef LLVM_TRANSFORMS_UTILS_THREADANTIDBHELPER
-#define LLVM_TRANSFORMS_UTILS_THREADANTIDBHELPER
+#ifndef LLVM_TRANSFORMS_UTILS_THREADANTIDBHELPER2
+#define LLVM_TRANSFORMS_UTILS_THREADANTIDBHELPER2
 
 #include <random>
 
-class AntiDBHelper{
+class AntiDBHelper2{
 public:
   static std::string thread_code;
 };
 
-std::string AntiDBHelper::thread_code  = R"""(; ModuleID = 'thread_antiDB.cpp'
+std::string AntiDBHelper2::thread_code  = R"""(; ModuleID = 'thread_antiDB.cpp'
 source_filename = "thread_antiDB.cpp"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
@@ -3864,4 +3864,4 @@ attributes #17 = { noreturn }
 !21 = distinct !{!21, !7}
 )""";
 
-#endif // LLVM_TRANSFORMS_UTILS_THREADANTIDBHELPER
+#endif // LLVM_TRANSFORMS_UTILS_THREADANTIDB2HELPER
