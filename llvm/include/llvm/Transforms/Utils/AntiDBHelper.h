@@ -772,7 +772,7 @@ define dso_local noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %0, 
 
 23:                                               ; preds = %71, %4
   %24 = load i32, ptr %10, align 4
-  %25 = icmp slt i32 %24, 4
+  %25 = icmp slt i32 %24, 1
   br i1 %25, label %26, label %77
 
 26:                                               ; preds = %23
@@ -3845,7 +3845,7 @@ attributes #17 = { noreturn }
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{i32 7, !"frame-pointer", i32 2}
-!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git 8af3f083340bbe9414011360f5ce2eafcd283c1a)"}
+!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git 770ed763e4f9e3081ca419a1bf1dfa460e2b2704)"}
 !6 = distinct !{!6, !7}
 !7 = !{!"llvm.loop.mustprogress"}
 !8 = distinct !{!8, !7}
