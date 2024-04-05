@@ -50,7 +50,7 @@ foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=antidb
 ```
 or
 ```console
-foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=antidb
+foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=antidb2
 ```
 
 (To find out the pass name see:  llvm/lib/Passes/PassRegistry.def)
