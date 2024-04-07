@@ -19,7 +19,7 @@ int main ( int argc, char *argv[] )
 
 
 //strcmp
-if(!strcmp(input,”test”) { 
+if(!strcmp(input,"test") { 
 	puts("wrong"); 
 	return -1; 
 } 
