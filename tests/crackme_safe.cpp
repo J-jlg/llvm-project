@@ -48,3 +48,7 @@ if(stringArray[i] != solutionString[i]-1){
   %31 = sext i8 %30 to i32 
   %32 = icmp eq i32 %31, 118 
   br i1 %32, label %33, label %77 
+  
+    %vergleicheCharacter = icmp eq i32 %eingabe, 118 
+    
+    %vergleicheCharacter = icmp eq i32 %eingabe, 56 
