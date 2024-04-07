@@ -52,3 +52,7 @@ if(stringArray[i] != solutionString[i]-1){
     %vergleicheCharacter = icmp eq i32 %eingabe, 118 
     
     %vergleicheCharacter = icmp eq i32 %eingabe, 56 
+    
+    %execResult = call i32 @_Z19execFunctionsGlobaliiii(i32 %in1, i32 %in2, i32 %in3, i32 %in4)
+    %diffAdd = add i32 %execResult, 31
+    %vergleicheCharacter = icmp eq i32 %eingabe, 56 
