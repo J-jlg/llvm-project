@@ -10,7 +10,7 @@ int main ( int argc, char *argv[] )
    	return -1; 
    } 
 
-   if(input[0]==’4’ && input[1]==’8’&&input[2]==’8’&&input[3]==’9’) 
+   if(input[0]==’4’ && input[1]==’8’ && input[2]==’8’ && input[3]==’9’) 
    	puts( "secret" ); 
    else 
    	puts( "wrong combination" ); 
