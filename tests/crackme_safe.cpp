@@ -24,7 +24,9 @@ if(!strcmp(input,"test") {
 	return -1; 
 } 
 
-if(!strcmp(sha3_b64(input), "NTJhZTg5YmUzMjA2MTI0NTQyMjM2ZjAxZDU1ZDBlMjIzNjQxM2M3YjU5MDJkOTZlNjU2ZWMyYmIwZjE0OWZkOWY5NDVjYWEyZTRiMzRiNWU2NWEyMGNlZmQzYzAzMTBmYTE2Y2E1YmI4MDAyNjZmNjRkMTUwY2RlYTlkYTY1MmM=") { 
+if(!strcmp(sha3_b64(input), R"""(NTJhZTg5YmUzMjA2MTI0NTQyMjM2ZjAxZDU1ZDBlMjIzNjQxM
+2M3YjU5MDJkOTZlNjU2ZWMyYmIwZjE0OWZkOWY5NDVjYWEyZTRiMzR
+iNWU2NWEyMGNlZmQzYzAzMTBmYTE2Y2E1YmI4MDAyNjZmNjRkMTUwY2RlYTlkYTY1MmM=)""") { 
 	puts("wrong"); 
 	return –1; 
 } 
