@@ -38,7 +38,7 @@ attributes #2 = { mustprogress noinline norecurse ```optnone```
 
 To apply the transformations:
 ```console
-foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=CFF
+foo@bar:~$ /build/bin/opt example.ll -o example_cff.bc -passes=cff
 ```
 or
 ```console
