@@ -3,7 +3,6 @@
 #include "llvm/ADT/PostOrderIterator.h"
 #include "llvm/ADT/Statistic.h"
 #include "llvm/IR/CFG.h"
-#include "llvm/Linker/Linker.h"
 #include "llvm/IR/InstIterator.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
@@ -533,7 +532,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
         }
       }
       //TODO: parseIRFile -> parseFile to use raw string instead of hardcoded file?!
-      Linker::linkModules(M, std::move(newModule));
+      Linker2::linkModules2(M, std::move(newModule));
   }
   
   Function *computeFctOwn = M.getFunction(fctName);

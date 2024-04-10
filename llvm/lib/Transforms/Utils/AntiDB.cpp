@@ -32,7 +32,7 @@ PreservedAnalyses AntiDBPass::run(Function &F, FunctionAnalysisManager &AM) {
 
   Function *computeFctExternalModule = M.getFunction(antiDBFctName);
   if (computeFctExternalModule == nullptr) {
-      Linker::linkModules(M, std::move(newModule));
+      Linker2::linkModules2(M, std::move(newModule));
   }
   
   std::vector<Value *> argsValAntiDB;

@@ -6,8 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
-#ifndef LLVM_LINKER_LINKER_H
-#define LLVM_LINKER_LINKER_H
+#ifndef LLVM_LINKER_LINKER_H2
+#define LLVM_LINKER_LINKER_H2
 
 #include "llvm/ADT/StringSet.h"
 #include "llvm/Linker/IRMover.h"
@@ -19,7 +19,7 @@ class Module;
 /// pointer to the merged module so far. It doesn't take ownership of the
 /// module since it is assumed that the user of this class will want to do
 /// something with it after the linking.
-class Linker {
+class Linker2 {
   IRMover Mover;
 
 public:
@@ -29,7 +29,7 @@ public:
     LinkOnlyNeeded = (1 << 1),
   };
 
-  Linker(Module &M);
+  Linker2(Module &M);
 
   /// Link \p Src into the composite.
   ///
@@ -41,11 +41,11 @@ public:
   /// callback.
   ///
   /// Returns true on error.
-  bool linkInModule(std::unique_ptr<Module> Src, unsigned Flags = Flags::None,
+  bool linkInModule2(std::unique_ptr<Module> Src, unsigned Flags = Flags::None,
                     std::function<void(Module &, const StringSet<> &)>
                         InternalizeCallback = {});
 
-  static bool linkModules(Module &Dest, std::unique_ptr<Module> Src,
+  static bool linkModules2(Module &Dest, std::unique_ptr<Module> Src,
                           unsigned Flags = Flags::None,
                           std::function<void(Module &, const StringSet<> &)>
                               InternalizeCallback = {});

@@ -17,7 +17,7 @@
 #include "llvm/IR/GlobalValue.h"
 #include "llvm/IR/LLVMContext.h"
 #include "llvm/IR/Module.h"
-#include "llvm/Linker/Linker.h"
+#include "llvm/Transforms/Utils/Linker.h"
 #include "llvm/Support/Error.h"
 using namespace llvm;
 
@@ -50,8 +50,8 @@ class ModuleLinker {
   /// to Add.
   void addLazyFor(GlobalValue &GV, const IRMover::ValueAdder &Add);
 
-  bool shouldOverrideFromSrc() { return Flags & Linker::OverrideFromSrc; }
-  bool shouldLinkOnlyNeeded() { return Flags & Linker::LinkOnlyNeeded; }
+  bool shouldOverrideFromSrc() { return Flags & Linker2::OverrideFromSrc; }
+  bool shouldLinkOnlyNeeded() { return Flags & Linker2::LinkOnlyNeeded; }
 
   bool shouldLinkFromSource(bool &LinkFromSrc, const GlobalValue &Dest,
                             const GlobalValue &Src);
@@ -618,9 +618,9 @@ bool ModuleLinker::run() {
   return false;
 }
 
-Linker::Linker(Module &M) : Mover(M) {}
+Linker2::Linker2(Module &M) : Mover(M) {}
 
-bool Linker::linkInModule(
+bool Linker2::linkInModule2(
     std::unique_ptr<Module> Src, unsigned Flags,
     std::function<void(Module &, const StringSet<> &)> InternalizeCallback) {
   ModuleLinker ModLinker(Mover, std::move(Src), Flags,
@@ -637,19 +637,19 @@ bool Linker::linkInModule(
 /// true is returned and ErrorMsg (if not null) is set to indicate the problem.
 /// Upon failure, the Dest module could be in a modified state, and shouldn't be
 /// relied on to be consistent.
-bool Linker::linkModules(
+bool Linker2::linkModules2(
     Module &Dest, std::unique_ptr<Module> Src, unsigned Flags,
     std::function<void(Module &, const StringSet<> &)> InternalizeCallback) {
-  Linker L(Dest);
-  return L.linkInModule(std::move(Src), Flags, std::move(InternalizeCallback));
+  Linker2 L(Dest);
+  return L.linkInModule2(std::move(Src), Flags, std::move(InternalizeCallback));
 }
 
 //===----------------------------------------------------------------------===//
 // C API.
 //===----------------------------------------------------------------------===//
 
-LLVMBool LLVMLinkModules2(LLVMModuleRef Dest, LLVMModuleRef Src) {
+LLVMBool LLVMLinkModules3(LLVMModuleRef Dest, LLVMModuleRef Src) {
   Module *D = unwrap(Dest);
   std::unique_ptr<Module> M(unwrap(Src));
-  return Linker::linkModules(*D, std::move(M));
+  return Linker2::linkModules2(*D, std::move(M));
 }
