@@ -2112,7 +2112,7 @@ define dso_local noundef i32 @_Z19execFunctionsGlobaliiii(i32 noundef %0, i32 no
 
 30:                                               ; preds = %100, %4
   %31 = load i32, ptr %10, align 4
-  %32 = icmp slt i32 %31, 4
+  %32 = icmp slt i32 %31, 20
   br i1 %32, label %33, label %106
 
 33:                                               ; preds = %30
@@ -5892,7 +5892,7 @@ attributes #18 = { noreturn }
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{i32 7, !"frame-pointer", i32 2}
-!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git 6959995497fe557e9a8b45c4c6e107d039530317)"}
+!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git a9aa52ffc38f7476b424144c0a00916ce9afdd89)"}
 !6 = distinct !{!6, !7}
 !7 = !{!"llvm.loop.mustprogress"}
 !8 = distinct !{!8, !7}

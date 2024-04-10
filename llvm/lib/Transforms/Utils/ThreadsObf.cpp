@@ -462,7 +462,7 @@ int execFunctionsGlobal(int k1, int k2, int k3, int k4) {
   // 10mal ausfüren
   std::map<int, int> counters;
 
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 20; i++) {
     globalVar1 = 0;
     globalVar2 = 0;
     globalVar3 = 0;
@@ -540,7 +540,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
   for (Instruction &I : instructions(F)) {
     if (auto cmp = dyn_cast<ICmpInst>(&I)) {
       if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(1))) {
-          if (constant->isNegative())
+          if (constant->isNegative() || constant->getIntegerType()->getBitWidth()!=32)
             continue;
         WorkList.push_back(cmp);
       }
