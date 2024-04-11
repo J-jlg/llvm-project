@@ -1,7 +1,7 @@
 char calculatedChar = 'a';
 
 void calcCharValue(char src, char key) {
-    calculatedChar = src + key;
+    calculatedChar = src ^ key;
 }
 
 char* decodeChar(char* src, char* key, int len){
