@@ -542,10 +542,8 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(0))) {
           if (constant->isNegative() || constant->getIntegerType()->getBitWidth()!=32)
             continue;
-      if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(1)))
-          if (constant->isNegative() || constant->getIntegerType()->getBitWidth()!=32)
-            continue;      
         WorkList.push_back(cmp);
+	outs() << "applied thread obf";
       }
     } else if (auto call = dyn_cast<CallInst>(&I)) {
       if (call->getCalledFunction()->getName().equals("strncpy")) {
