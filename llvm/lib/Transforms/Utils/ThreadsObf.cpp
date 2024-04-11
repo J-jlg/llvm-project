@@ -539,7 +539,8 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
 
   for (Instruction &I : instructions(F)) {
     if (auto cmp = dyn_cast<ICmpInst>(&I)) {
-      if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(0))) {
+      if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(1))) {
+        outs() << constant->getIntegerType()->getBitWidth();
           if (constant->isNegative() || constant->getIntegerType()->getBitWidth()!=32)
             continue;
         WorkList.push_back(cmp);
