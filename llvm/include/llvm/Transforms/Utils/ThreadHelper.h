@@ -2649,7 +2649,7 @@ define dso_local void @_Z13calcCharValuecc(i8 noundef signext %0, i8 noundef sig
   %6 = sext i8 %5 to i32
   %7 = load i8, ptr %4, align 1
   %8 = sext i8 %7 to i32
-  %9 = add nsw i32 %6, %8
+  %9 = xor i32 %6, %8
   %10 = trunc i32 %9 to i8
   store i8 %10, ptr @calculatedChar, align 1
   ret void
@@ -5892,7 +5892,7 @@ attributes #18 = { noreturn }
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{i32 7, !"frame-pointer", i32 2}
-!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git a9aa52ffc38f7476b424144c0a00916ce9afdd89)"}
+!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git c1bc2fcc08d12ae503d1f126aad843cb8789d26a)"}
 !6 = distinct !{!6, !7}
 !7 = !{!"llvm.loop.mustprogress"}
 !8 = distinct !{!8, !7}

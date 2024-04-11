@@ -569,7 +569,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       char *strKey = new char[con->getNumElements()];
       for (int elemIdx = 0; elemIdx < con->getNumElements() - 1; elemIdx++) {
         int offsetRand = dist20(randomng);
-        str[elemIdx] = con->getElementAsInteger(elemIdx) - offsetRand;
+        str[elemIdx] = con->getElementAsInteger(elemIdx) ^ offsetRand;
         strKey[elemIdx] = 0x00 + offsetRand;
       }
       str[con->getNumElements() - 1] = 0x00;
