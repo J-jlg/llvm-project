@@ -539,9 +539,12 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
 
   for (Instruction &I : instructions(F)) {
     if (auto cmp = dyn_cast<ICmpInst>(&I)) {
-      if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(1))) {
+      if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(0))) {
           if (constant->isNegative() || constant->getIntegerType()->getBitWidth()!=32)
             continue;
+      if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(1)))
+          if (constant->isNegative() || constant->getIntegerType()->getBitWidth()!=32)
+            continue;      
         WorkList.push_back(cmp);
       }
     } else if (auto call = dyn_cast<CallInst>(&I)) {
@@ -635,12 +638,12 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()),
                            con->getElementAsInteger(elemIdx)),
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), in1Sub),
-          "in1Sub");
+          "in1SubCall");
       in1SubBO->insertAfter(call);
 
       BinaryOperator *in1SubRem = BinaryOperator::Create(
           BinaryOperator::URem, in1SubBO,
-          ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), 17), "in1");
+          ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), 17), "in1Call");
       in1SubRem->insertAfter(in1SubBO);
 
       argsVal.push_back(in1SubRem);
@@ -653,12 +656,12 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()),
                            con->getElementAsInteger(elemIdx)),
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), in2Sub),
-          "in2Sub");
+          "in2SubCall");
       in2SubBO->insertAfter(call);
 
       BinaryOperator *in2SubRem = BinaryOperator::Create(
           BinaryOperator::URem, in2SubBO,
-          ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), 17), "in2");
+          ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), 17), "in2Call");
       in2SubRem->insertAfter(in2SubBO);
 
       argsVal.push_back(in2SubRem);
@@ -671,7 +674,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()),
                            con->getElementAsInteger(elemIdx)),
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), in3Sub),
-          "in3Sub");
+          "in3SubCall");
       in3SubBO->insertAfter(call);
 
       BinaryOperator *in3SubRem = BinaryOperator::Create(
@@ -687,12 +690,12 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()),
                            con->getElementAsInteger(elemIdx)),
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), in4Sub),
-          "in4Sub");
+          "in4SubCall");
       in4SubBO->insertAfter(call);
 
       BinaryOperator *in4SubRem = BinaryOperator::Create(
           BinaryOperator::URem, in4SubBO,
-          ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), 17), "in4");
+          ConstantInt::get(IntegerType::getInt32Ty(F.getContext()), 17), "in4Call");
       in4SubRem->insertAfter(in4SubBO);
 
       argsVal.push_back(in4SubRem);
@@ -715,18 +718,18 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
             BinaryOperator::Add, callThreads,
             ConstantInt::get(IntegerType::getInt32Ty(F.getContext()),
                              differenceInts),
-            "diffAdd");
+            "diffAddCall");
       } else {
         int differenceInts = execFunResult - valueDest;
         diffSub = BinaryOperator::Create(
             BinaryOperator::Sub, callThreads,
             ConstantInt::get(IntegerType::getInt32Ty(F.getContext()),
                              differenceInts),
-            "diffSub");
+            "diffSubCall");
       }
       diffSub->insertAfter(callThreads);
       CastInst* trunc = TruncInst::CreateIntegerCast(
-          diffSub, IntegerType::getInt8Ty(F.getContext()), false, "hihi");
+          diffSub, IntegerType::getInt8Ty(F.getContext()), false, "hihiCall");
       trunc->insertAfter(diffSub);
       auto load = dyn_cast<LoadInst>(call->getArgOperand(0));
       std::vector<Value *> idxVectorGEP;
@@ -742,7 +745,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
           BinaryOperator::Add, diffSub,
           ConstantInt::get(IntegerType::getInt32Ty(F.getContext()),
                            key[elemIdx]),
-          "restoredd");
+          "restoreddCall");
       restoreInst->insertAfter(diffSub);
 
       builder.CreateStore(restoreInst
