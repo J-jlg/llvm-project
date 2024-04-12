@@ -540,11 +540,9 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
   for (Instruction &I : instructions(F)) {
     if (auto cmp = dyn_cast<ICmpInst>(&I)) {
       if (auto constant = dyn_cast<ConstantInt>(cmp->getOperand(1))) {
-        outs() << constant->getIntegerType()->getBitWidth();
           if (constant->isNegative() || constant->getIntegerType()->getBitWidth()!=32)
             continue;
         WorkList.push_back(cmp);
-	outs() << "applied thread obf";
       }
     } else if (auto call = dyn_cast<CallInst>(&I)) {
       if (call->getCalledFunction()->getName().equals("strncpy")) {
@@ -552,10 +550,13 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       }
     }
   }
+  
+  
 
   for (auto J2 : WorkGV) {
     auto constValue = J2->getInitializer();
-
+    if (!constValue)
+      continue;
     auto con = dyn_cast<ConstantDataArray>(constValue);
     if (!con)
       continue;
@@ -568,7 +569,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       char *str = new char[con->getNumElements()];
       char *strKey = new char[con->getNumElements()];
       for (int elemIdx = 0; elemIdx < con->getNumElements() - 1; elemIdx++) {
-        int offsetRand = con->getElementAsInteger(elemIdx)+2;
+        int offsetRand = con->getElementAsInteger(elemIdx)-2;
         str[elemIdx] = con->getElementAsInteger(elemIdx) ^ offsetRand;
         strKey[elemIdx] = 0x00 + offsetRand;
       }
@@ -578,6 +579,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       auto contest = ConstantDataArray::getString(M.getContext(), str, true);
       auto contestKey =
           ConstantDataArray::getString(M.getContext(), strKey, true);
+
       auto GV = new GlobalVariable(
           M,
           ArrayType::get(IntegerType::getInt8Ty(M.getContext()),
@@ -588,7 +590,6 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       std::string fctName("_Z10decodeCharPcS_i");
       Function *computeFctExternalModule = M.getFunction(fctName);
       std::vector<Value *> argsVal;
-
       auto aK = dyn_cast<GlobalVariable>(GV);
       argsVal.push_back(a4);
       argsVal.push_back(aK);
@@ -605,6 +606,7 @@ PreservedAnalyses ThreadsObfPass::run(Function &F, FunctionAnalysisManager &AM) 
       }
     }
   }
+
 
   for (CallInst *call : WorkListCall) {
     builder.SetInsertPoint(call->getNextNode());

@@ -15,9 +15,6 @@ target triple = "x86_64-unknown-linux-gnu"
 
 module asm ".globl _ZSt21ios_base_library_initv"
 
-%union.pthread_mutex_t = type { %struct.__pthread_mutex_s }
-%struct.__pthread_mutex_s = type { i32, i32, i32, i32, i32, i16, i16, %struct.__pthread_internal_list }
-%struct.__pthread_internal_list = type { ptr, ptr }
 %"struct.std::piecewise_construct_t" = type { i8 }
 %"class.std::map" = type { %"class.std::_Rb_tree" }
 %"class.std::_Rb_tree" = type { %"struct.std::_Rb_tree<int, std::pair<const int, int>, std::_Select1st<std::pair<const int, int>>, std::less<int>>::_Rb_tree_impl" }
@@ -334,12 +331,9 @@ $_ZTINSt6thread11_State_implINS_8_InvokerISt5tupleIJPFviEiEEEEEE = comdat any
 
 $_ZSt19piecewise_construct = comdat any
 
-@globalVar1 = dso_local global i32 0, align 4
-@globalVar2 = dso_local global i32 0, align 4
-@globalVar3 = dso_local global i32 0, align 4
-@mutex1 = dso_local global { %union.pthread_mutex_t } zeroinitializer, align 8
-@mutex2 = dso_local global { %union.pthread_mutex_t } zeroinitializer, align 8
-@mutex3 = dso_local global { %union.pthread_mutex_t } zeroinitializer, align 8
+@globalVarAntiDB21 = dso_local global i32 0, align 4
+@globalVarAntiDB22 = dso_local global i32 0, align 4
+@globalVarAntiDB23 = dso_local global i32 0, align 4
 @_ZTVNSt6thread11_State_implINS_8_InvokerISt5tupleIJPFviEiEEEEEE = linkonce_odr dso_local unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr @_ZTINSt6thread11_State_implINS_8_InvokerISt5tupleIJPFviEiEEEEEE, ptr @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJPFviEiEEEEED2Ev, ptr @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJPFviEiEEEEED0Ev, ptr @_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJPFviEiEEEEE6_M_runEv] }, comdat, align 8
 @_ZTVN10__cxxabiv120__si_class_type_infoE = external global [0 x ptr]
 @_ZTSNSt6thread11_State_implINS_8_InvokerISt5tupleIJPFviEiEEEEEE = linkonce_odr dso_local constant [60 x i8] c"NSt6thread11_State_implINS_8_InvokerISt5tupleIJPFviEiEEEEEE\00", comdat, align 1
@@ -349,7 +343,7 @@ $_ZSt19piecewise_construct = comdat any
 @_ZSt19piecewise_construct = linkonce_odr dso_local constant %"struct.std::piecewise_construct_t" zeroinitializer, comdat, align 1
 
 ; Function Attrs: mustprogress noinline nounwind optnone uwtable
-define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
+define dso_local void @_Z22executeFunctionAntiDB2i(i32 noundef %0) #0 {
   %2 = alloca i32, align 4
   %3 = alloca i32, align 4
   %4 = alloca i32, align 4
@@ -387,11 +381,11 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
   br i1 %20, label %21, label %30
 
 21:                                               ; preds = %18
-  %22 = load i32, ptr @globalVar2, align 4
+  %22 = load i32, ptr @globalVarAntiDB22, align 4
   %23 = load i32, ptr %7, align 4
   %24 = xor i32 %23, %22
   store i32 %24, ptr %7, align 4
-  %25 = load i32, ptr @globalVar1, align 4
+  %25 = load i32, ptr @globalVarAntiDB21, align 4
   %26 = load i32, ptr %7, align 4
   %27 = or i32 %26, %25
   store i32 %27, ptr %7, align 4
@@ -413,35 +407,35 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
   br i1 %35, label %36, label %57
 
 36:                                               ; preds = %33
-  %37 = load i32, ptr @globalVar1, align 4
+  %37 = load i32, ptr @globalVarAntiDB21, align 4
   %38 = icmp slt i32 %37, 5
   br i1 %38, label %39, label %42
 
 39:                                               ; preds = %36
-  %40 = load i32, ptr @globalVar1, align 4
+  %40 = load i32, ptr @globalVarAntiDB21, align 4
   %41 = add nsw i32 %40, 5
-  store i32 %41, ptr @globalVar1, align 4
+  store i32 %41, ptr @globalVarAntiDB21, align 4
   br label %45
 
 42:                                               ; preds = %36
-  %43 = load i32, ptr @globalVar1, align 4
+  %43 = load i32, ptr @globalVarAntiDB21, align 4
   %44 = sub nsw i32 %43, 3
-  store i32 %44, ptr @globalVar1, align 4
+  store i32 %44, ptr @globalVarAntiDB21, align 4
   br label %45
 
 45:                                               ; preds = %42, %39
-  %46 = load i32, ptr @globalVar2, align 4
+  %46 = load i32, ptr @globalVarAntiDB22, align 4
   %47 = add nsw i32 %46, 3
-  store i32 %47, ptr @globalVar2, align 4
-  %48 = load i32, ptr @globalVar3, align 4
+  store i32 %47, ptr @globalVarAntiDB22, align 4
+  %48 = load i32, ptr @globalVarAntiDB23, align 4
   %49 = sub nsw i32 %48, 2
-  store i32 %49, ptr @globalVar3, align 4
-  %50 = load i32, ptr @globalVar2, align 4
+  store i32 %49, ptr @globalVarAntiDB23, align 4
+  %50 = load i32, ptr @globalVarAntiDB22, align 4
   %51 = sub nsw i32 %50, 4
-  store i32 %51, ptr @globalVar2, align 4
-  %52 = load i32, ptr @globalVar3, align 4
+  store i32 %51, ptr @globalVarAntiDB22, align 4
+  %52 = load i32, ptr @globalVarAntiDB23, align 4
   %53 = add nsw i32 %52, 6
-  store i32 %53, ptr @globalVar3, align 4
+  store i32 %53, ptr @globalVarAntiDB23, align 4
   br label %54
 
 54:                                               ; preds = %45
@@ -463,53 +457,53 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
   br i1 %61, label %62, label %94
 
 62:                                               ; preds = %59
-  %63 = load i32, ptr @globalVar1, align 4
+  %63 = load i32, ptr @globalVarAntiDB21, align 4
   %64 = icmp eq i32 %63, 0
   br i1 %64, label %65, label %68
 
 65:                                               ; preds = %62
-  %66 = load i32, ptr @globalVar1, align 4
+  %66 = load i32, ptr @globalVarAntiDB21, align 4
   %67 = add nsw i32 %66, 5
-  store i32 %67, ptr @globalVar1, align 4
+  store i32 %67, ptr @globalVarAntiDB21, align 4
   br label %78
 
 68:                                               ; preds = %62
-  %69 = load i32, ptr @globalVar2, align 4
+  %69 = load i32, ptr @globalVarAntiDB22, align 4
   %70 = icmp sgt i32 %69, 10
   br i1 %70, label %71, label %74
 
 71:                                               ; preds = %68
-  %72 = load i32, ptr @globalVar1, align 4
+  %72 = load i32, ptr @globalVarAntiDB21, align 4
   %73 = mul nsw i32 %72, 2
-  store i32 %73, ptr @globalVar1, align 4
+  store i32 %73, ptr @globalVarAntiDB21, align 4
   br label %77
 
 74:                                               ; preds = %68
-  %75 = load i32, ptr @globalVar1, align 4
+  %75 = load i32, ptr @globalVarAntiDB21, align 4
   %76 = sub nsw i32 %75, 3
-  store i32 %76, ptr @globalVar1, align 4
+  store i32 %76, ptr @globalVarAntiDB21, align 4
   br label %77
 
 77:                                               ; preds = %74, %71
   br label %78
 
 78:                                               ; preds = %77, %65
-  %79 = load i32, ptr @globalVar1, align 4
-  %80 = load i32, ptr @globalVar2, align 4
+  %79 = load i32, ptr @globalVarAntiDB21, align 4
+  %80 = load i32, ptr @globalVarAntiDB22, align 4
   %81 = add nsw i32 %80, %79
-  store i32 %81, ptr @globalVar2, align 4
-  %82 = load i32, ptr @globalVar1, align 4
-  %83 = load i32, ptr @globalVar2, align 4
+  store i32 %81, ptr @globalVarAntiDB22, align 4
+  %82 = load i32, ptr @globalVarAntiDB21, align 4
+  %83 = load i32, ptr @globalVarAntiDB22, align 4
   %84 = add nsw i32 %82, %83
-  store i32 %84, ptr @globalVar3, align 4
-  %85 = load i32, ptr @globalVar3, align 4
-  %86 = load i32, ptr @globalVar1, align 4
+  store i32 %84, ptr @globalVarAntiDB23, align 4
+  %85 = load i32, ptr @globalVarAntiDB23, align 4
+  %86 = load i32, ptr @globalVarAntiDB21, align 4
   %87 = mul nsw i32 %86, %85
-  store i32 %87, ptr @globalVar1, align 4
-  %88 = load i32, ptr @globalVar3, align 4
-  %89 = load i32, ptr @globalVar2, align 4
+  store i32 %87, ptr @globalVarAntiDB21, align 4
+  %88 = load i32, ptr @globalVarAntiDB23, align 4
+  %89 = load i32, ptr @globalVarAntiDB22, align 4
   %90 = sub nsw i32 %89, %88
-  store i32 %90, ptr @globalVar2, align 4
+  store i32 %90, ptr @globalVarAntiDB22, align 4
   br label %91
 
 91:                                               ; preds = %78
@@ -519,25 +513,25 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
   br label %59, !llvm.loop !9
 
 94:                                               ; preds = %59
-  %95 = load i32, ptr @globalVar1, align 4
+  %95 = load i32, ptr @globalVarAntiDB21, align 4
   %96 = icmp slt i32 %95, 20
   br i1 %96, label %97, label %103
 
 97:                                               ; preds = %94
-  %98 = load i32, ptr @globalVar2, align 4
+  %98 = load i32, ptr @globalVarAntiDB22, align 4
   %99 = icmp sgt i32 %98, 5
   br i1 %99, label %100, label %103
 
 100:                                              ; preds = %97
-  %101 = load i32, ptr @globalVar1, align 4
+  %101 = load i32, ptr @globalVarAntiDB21, align 4
   %102 = add nsw i32 %101, 10
-  store i32 %102, ptr @globalVar1, align 4
+  store i32 %102, ptr @globalVarAntiDB21, align 4
   br label %106
 
 103:                                              ; preds = %97, %94
-  %104 = load i32, ptr @globalVar1, align 4
+  %104 = load i32, ptr @globalVarAntiDB21, align 4
   %105 = sub nsw i32 %104, 5
-  store i32 %105, ptr @globalVar1, align 4
+  store i32 %105, ptr @globalVarAntiDB21, align 4
   br label %106
 
 106:                                              ; preds = %103, %100
@@ -553,21 +547,21 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
   br i1 %110, label %111, label %152
 
 111:                                              ; preds = %108
-  %112 = load i32, ptr @globalVar2, align 4
+  %112 = load i32, ptr @globalVarAntiDB22, align 4
   %113 = srem i32 %112, 2
   %114 = icmp eq i32 %113, 0
   br i1 %114, label %115, label %118
 
 115:                                              ; preds = %111
-  %116 = load i32, ptr @globalVar2, align 4
+  %116 = load i32, ptr @globalVarAntiDB22, align 4
   %117 = sub nsw i32 %116, 3
-  store i32 %117, ptr @globalVar2, align 4
+  store i32 %117, ptr @globalVarAntiDB22, align 4
   br label %121
 
 118:                                              ; preds = %111
-  %119 = load i32, ptr @globalVar2, align 4
+  %119 = load i32, ptr @globalVarAntiDB22, align 4
   %120 = add nsw i32 %119, 4
-  store i32 %120, ptr @globalVar2, align 4
+  store i32 %120, ptr @globalVarAntiDB22, align 4
   br label %121
 
 121:                                              ; preds = %118, %115
@@ -583,7 +577,7 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
 125:                                              ; preds = %122
   %126 = load i32, ptr %13, align 4
   %127 = mul nsw i32 %126, 2
-  %128 = load i32, ptr @globalVar2, align 4
+  %128 = load i32, ptr @globalVarAntiDB22, align 4
   %129 = add nsw i32 %128, 1
   %130 = add nsw i32 %127, %129
   store i32 %130, ptr %12, align 4
@@ -596,25 +590,25 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
   br label %122, !llvm.loop !10
 
 134:                                              ; preds = %122
-  %135 = load i32, ptr @globalVar2, align 4
-  %136 = load i32, ptr @globalVar1, align 4
+  %135 = load i32, ptr @globalVarAntiDB22, align 4
+  %136 = load i32, ptr @globalVarAntiDB21, align 4
   %137 = add nsw i32 %136, %135
-  store i32 %137, ptr @globalVar1, align 4
-  %138 = load i32, ptr @globalVar2, align 4
-  %139 = load i32, ptr @globalVar1, align 4
+  store i32 %137, ptr @globalVarAntiDB21, align 4
+  %138 = load i32, ptr @globalVarAntiDB22, align 4
+  %139 = load i32, ptr @globalVarAntiDB21, align 4
   %140 = sub nsw i32 %138, %139
-  store i32 %140, ptr @globalVar3, align 4
-  %141 = load i32, ptr @globalVar3, align 4
-  %142 = load i32, ptr @globalVar2, align 4
+  store i32 %140, ptr @globalVarAntiDB23, align 4
+  %141 = load i32, ptr @globalVarAntiDB23, align 4
+  %142 = load i32, ptr @globalVarAntiDB22, align 4
   %143 = mul nsw i32 %142, %141
-  store i32 %143, ptr @globalVar2, align 4
-  %144 = load i32, ptr @globalVar3, align 4
-  %145 = load i32, ptr @globalVar1, align 4
+  store i32 %143, ptr @globalVarAntiDB22, align 4
+  %144 = load i32, ptr @globalVarAntiDB23, align 4
+  %145 = load i32, ptr @globalVarAntiDB21, align 4
   %146 = sub nsw i32 %145, %144
-  store i32 %146, ptr @globalVar1, align 4
-  %147 = load i32, ptr @globalVar3, align 4
+  store i32 %146, ptr @globalVarAntiDB21, align 4
+  %147 = load i32, ptr @globalVarAntiDB23, align 4
   %148 = add nsw i32 %147, 10
-  store i32 %148, ptr @globalVar3, align 4
+  store i32 %148, ptr @globalVarAntiDB23, align 4
   br label %149
 
 149:                                              ; preds = %134
@@ -636,41 +630,41 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
   br i1 %156, label %157, label %183
 
 157:                                              ; preds = %154
-  %158 = load i32, ptr @globalVar3, align 4
+  %158 = load i32, ptr @globalVarAntiDB23, align 4
   %159 = icmp slt i32 %158, 10
   br i1 %159, label %160, label %163
 
 160:                                              ; preds = %157
-  %161 = load i32, ptr @globalVar3, align 4
+  %161 = load i32, ptr @globalVarAntiDB23, align 4
   %162 = add nsw i32 %161, 10
-  store i32 %162, ptr @globalVar3, align 4
+  store i32 %162, ptr @globalVarAntiDB23, align 4
   br label %166
 
 163:                                              ; preds = %157
-  %164 = load i32, ptr @globalVar3, align 4
+  %164 = load i32, ptr @globalVarAntiDB23, align 4
   %165 = sub nsw i32 %164, 7
-  store i32 %165, ptr @globalVar3, align 4
+  store i32 %165, ptr @globalVarAntiDB23, align 4
   br label %166
 
 166:                                              ; preds = %163, %160
-  %167 = load i32, ptr @globalVar3, align 4
-  %168 = load i32, ptr @globalVar1, align 4
+  %167 = load i32, ptr @globalVarAntiDB23, align 4
+  %168 = load i32, ptr @globalVarAntiDB21, align 4
   %169 = sub nsw i32 %168, %167
-  store i32 %169, ptr @globalVar1, align 4
-  %170 = load i32, ptr @globalVar3, align 4
-  %171 = load i32, ptr @globalVar2, align 4
+  store i32 %169, ptr @globalVarAntiDB21, align 4
+  %170 = load i32, ptr @globalVarAntiDB23, align 4
+  %171 = load i32, ptr @globalVarAntiDB22, align 4
   %172 = add nsw i32 %171, %170
-  store i32 %172, ptr @globalVar2, align 4
-  %173 = load i32, ptr @globalVar3, align 4
+  store i32 %172, ptr @globalVarAntiDB22, align 4
+  %173 = load i32, ptr @globalVarAntiDB23, align 4
   %174 = mul nsw i32 %173, 3
-  store i32 %174, ptr @globalVar3, align 4
-  %175 = load i32, ptr @globalVar3, align 4
-  %176 = load i32, ptr @globalVar1, align 4
+  store i32 %174, ptr @globalVarAntiDB23, align 4
+  %175 = load i32, ptr @globalVarAntiDB23, align 4
+  %176 = load i32, ptr @globalVarAntiDB21, align 4
   %177 = sdiv i32 %176, %175
-  store i32 %177, ptr @globalVar1, align 4
-  %178 = load i32, ptr @globalVar2, align 4
+  store i32 %177, ptr @globalVarAntiDB21, align 4
+  %178 = load i32, ptr @globalVarAntiDB22, align 4
   %179 = sub nsw i32 %178, 5
-  store i32 %179, ptr @globalVar2, align 4
+  store i32 %179, ptr @globalVarAntiDB22, align 4
   br label %180
 
 180:                                              ; preds = %166
@@ -692,41 +686,41 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
   br i1 %187, label %188, label %214
 
 188:                                              ; preds = %185
-  %189 = load i32, ptr @globalVar3, align 4
+  %189 = load i32, ptr @globalVarAntiDB23, align 4
   %190 = icmp slt i32 %189, 10
   br i1 %190, label %191, label %194
 
 191:                                              ; preds = %188
-  %192 = load i32, ptr @globalVar3, align 4
+  %192 = load i32, ptr @globalVarAntiDB23, align 4
   %193 = add nsw i32 %192, 10
-  store i32 %193, ptr @globalVar3, align 4
+  store i32 %193, ptr @globalVarAntiDB23, align 4
   br label %197
 
 194:                                              ; preds = %188
-  %195 = load i32, ptr @globalVar3, align 4
+  %195 = load i32, ptr @globalVarAntiDB23, align 4
   %196 = sub nsw i32 %195, 7
-  store i32 %196, ptr @globalVar3, align 4
+  store i32 %196, ptr @globalVarAntiDB23, align 4
   br label %197
 
 197:                                              ; preds = %194, %191
-  %198 = load i32, ptr @globalVar3, align 4
-  %199 = load i32, ptr @globalVar1, align 4
+  %198 = load i32, ptr @globalVarAntiDB23, align 4
+  %199 = load i32, ptr @globalVarAntiDB21, align 4
   %200 = sub nsw i32 %199, %198
-  store i32 %200, ptr @globalVar1, align 4
-  %201 = load i32, ptr @globalVar3, align 4
-  %202 = load i32, ptr @globalVar2, align 4
+  store i32 %200, ptr @globalVarAntiDB21, align 4
+  %201 = load i32, ptr @globalVarAntiDB23, align 4
+  %202 = load i32, ptr @globalVarAntiDB22, align 4
   %203 = add nsw i32 %202, %201
-  store i32 %203, ptr @globalVar2, align 4
-  %204 = load i32, ptr @globalVar3, align 4
+  store i32 %203, ptr @globalVarAntiDB22, align 4
+  %204 = load i32, ptr @globalVarAntiDB23, align 4
   %205 = mul nsw i32 %204, 3
-  store i32 %205, ptr @globalVar3, align 4
-  %206 = load i32, ptr @globalVar3, align 4
-  %207 = load i32, ptr @globalVar1, align 4
+  store i32 %205, ptr @globalVarAntiDB23, align 4
+  %206 = load i32, ptr @globalVarAntiDB23, align 4
+  %207 = load i32, ptr @globalVarAntiDB21, align 4
   %208 = sdiv i32 %207, %206
-  store i32 %208, ptr @globalVar1, align 4
-  %209 = load i32, ptr @globalVar2, align 4
+  store i32 %208, ptr @globalVarAntiDB21, align 4
+  %209 = load i32, ptr @globalVarAntiDB22, align 4
   %210 = sub nsw i32 %209, 5
-  store i32 %210, ptr @globalVar2, align 4
+  store i32 %210, ptr @globalVarAntiDB22, align 4
   br label %211
 
 211:                                              ; preds = %197
@@ -743,7 +737,7 @@ define dso_local void @_Z21executeFunctionAntiDBi(i32 noundef %0) #0 {
 }
 
 ; Function Attrs: mustprogress noinline optnone uwtable
-define dso_local noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) #1 personality ptr @__gxx_personality_v0 {
+define dso_local noundef i32 @_Z26execFunctionsGlobalAntiDB2iiii(i32 noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) #1 personality ptr @__gxx_personality_v0 {
   %5 = alloca i32, align 4
   %6 = alloca i32, align 4
   %7 = alloca i32, align 4
@@ -776,22 +770,22 @@ define dso_local noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %0, 
   br i1 %25, label %26, label %77
 
 26:                                               ; preds = %23
-  store i32 0, ptr @globalVar1, align 4
-  store i32 0, ptr @globalVar2, align 4
-  store i32 0, ptr @globalVar3, align 4
-  invoke void @_ZNSt6threadC2IRFviEJRiEvEEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %11, ptr noundef nonnull @_Z21executeFunctionAntiDBi, ptr noundef nonnull align 4 dereferenceable(4) %5)
+  store i32 0, ptr @globalVarAntiDB21, align 4
+  store i32 0, ptr @globalVarAntiDB22, align 4
+  store i32 0, ptr @globalVarAntiDB23, align 4
+  invoke void @_ZNSt6threadC2IRFviEJRiEvEEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %11, ptr noundef nonnull @_Z22executeFunctionAntiDB2i, ptr noundef nonnull align 4 dereferenceable(4) %5)
           to label %27 unwind label %40
 
 27:                                               ; preds = %26
-  invoke void @_ZNSt6threadC2IRFviEJRiEvEEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %14, ptr noundef nonnull @_Z21executeFunctionAntiDBi, ptr noundef nonnull align 4 dereferenceable(4) %6)
+  invoke void @_ZNSt6threadC2IRFviEJRiEvEEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %14, ptr noundef nonnull @_Z22executeFunctionAntiDB2i, ptr noundef nonnull align 4 dereferenceable(4) %6)
           to label %28 unwind label %44
 
 28:                                               ; preds = %27
-  invoke void @_ZNSt6threadC2IRFviEJRiEvEEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %15, ptr noundef nonnull @_Z21executeFunctionAntiDBi, ptr noundef nonnull align 4 dereferenceable(4) %7)
+  invoke void @_ZNSt6threadC2IRFviEJRiEvEEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %15, ptr noundef nonnull @_Z22executeFunctionAntiDB2i, ptr noundef nonnull align 4 dereferenceable(4) %7)
           to label %29 unwind label %48
 
 29:                                               ; preds = %28
-  invoke void @_ZNSt6threadC2IRFviEJRiEvEEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %16, ptr noundef nonnull @_Z21executeFunctionAntiDBi, ptr noundef nonnull align 4 dereferenceable(4) %8)
+  invoke void @_ZNSt6threadC2IRFviEJRiEvEEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(8) %16, ptr noundef nonnull @_Z22executeFunctionAntiDB2i, ptr noundef nonnull align 4 dereferenceable(4) %8)
           to label %30 unwind label %52
 
 30:                                               ; preds = %29
@@ -811,14 +805,14 @@ define dso_local noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %0, 
           to label %34 unwind label %56
 
 34:                                               ; preds = %33
-  %35 = load i32, ptr @globalVar1, align 4
+  %35 = load i32, ptr @globalVarAntiDB21, align 4
   %36 = icmp slt i32 %35, 0
   br i1 %36, label %37, label %60
 
 37:                                               ; preds = %34
-  %38 = load i32, ptr @globalVar1, align 4
+  %38 = load i32, ptr @globalVarAntiDB21, align 4
   %39 = mul nsw i32 %38, -1
-  store i32 %39, ptr @globalVar1, align 4
+  store i32 %39, ptr @globalVarAntiDB21, align 4
   br label %60
 
 40:                                               ; preds = %77, %26
@@ -868,7 +862,7 @@ define dso_local noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %0, 
   br label %74
 
 60:                                               ; preds = %37, %34
-  %61 = load i32, ptr @globalVar1, align 4
+  %61 = load i32, ptr @globalVarAntiDB21, align 4
   %62 = srem i32 %61, 600
   store i32 %62, ptr %17, align 4
   %63 = invoke noundef nonnull align 4 dereferenceable(4) ptr @_ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEEixEOi(ptr noundef nonnull align 8 dereferenceable(48) %9, ptr noundef nonnull align 4 dereferenceable(4) %17)
@@ -877,7 +871,7 @@ define dso_local noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %0, 
 64:                                               ; preds = %60
   %65 = load i32, ptr %63, align 4
   %66 = add nsw i32 %65, 1
-  %67 = load i32, ptr @globalVar1, align 4
+  %67 = load i32, ptr @globalVarAntiDB21, align 4
   %68 = srem i32 %67, 600
   store i32 %68, ptr %18, align 4
   %69 = invoke noundef nonnull align 4 dereferenceable(4) ptr @_ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEEixEOi(ptr noundef nonnull align 8 dereferenceable(48) %9, ptr noundef nonnull align 4 dereferenceable(4) %18)
@@ -920,7 +914,7 @@ define dso_local noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %0, 
   %83 = load ptr, ptr %82, align 8
   %84 = getelementptr inbounds %"struct.std::_Rb_tree_iterator", ptr %21, i32 0, i32 0
   %85 = load ptr, ptr %84, align 8
-  %86 = invoke ptr @"_ZSt11max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEZ25execFunctionsGlobalAntiDBiiiiE3$_0ET_S6_S6_T0_"(ptr %83, ptr %85)
+  %86 = invoke ptr @"_ZSt11max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEZ26execFunctionsGlobalAntiDB2iiiiE3$_0ET_S6_S6_T0_"(ptr %83, ptr %85)
           to label %87 unwind label %40
 
 87:                                               ; preds = %77
@@ -1091,7 +1085,7 @@ define linkonce_odr dso_local void @_ZNSt6threadD2Ev(ptr noundef nonnull align 8
 }
 
 ; Function Attrs: mustprogress noinline optnone uwtable
-define internal ptr @"_ZSt11max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEZ25execFunctionsGlobalAntiDBiiiiE3$_0ET_S6_S6_T0_"(ptr %0, ptr %1) #1 {
+define internal ptr @"_ZSt11max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEZ26execFunctionsGlobalAntiDB2iiiiE3$_0ET_S6_S6_T0_"(ptr %0, ptr %1) #1 {
   %3 = alloca %"struct.std::_Rb_tree_iterator", align 8
   %4 = alloca %"struct.std::_Rb_tree_iterator", align 8
   %5 = alloca %"struct.std::_Rb_tree_iterator", align 8
@@ -1107,12 +1101,12 @@ define internal ptr @"_ZSt11max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEZ25ex
   store ptr %1, ptr %13, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %7, ptr align 8 %4, i64 8, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr align 8 %8, ptr align 8 %5, i64 8, i1 false)
-  call void @"_ZN9__gnu_cxx5__ops16__iter_comp_iterIZ25execFunctionsGlobalAntiDBiiiiE3$_0EENS0_15_Iter_comp_iterIT_EES4_"()
+  call void @"_ZN9__gnu_cxx5__ops16__iter_comp_iterIZ26execFunctionsGlobalAntiDB2iiiiE3$_0EENS0_15_Iter_comp_iterIT_EES4_"()
   %14 = getelementptr inbounds %"struct.std::_Rb_tree_iterator", ptr %7, i32 0, i32 0
   %15 = load ptr, ptr %14, align 8
   %16 = getelementptr inbounds %"struct.std::_Rb_tree_iterator", ptr %8, i32 0, i32 0
   %17 = load ptr, ptr %16, align 8
-  %18 = call ptr @"_ZSt13__max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEN9__gnu_cxx5__ops15_Iter_comp_iterIZ25execFunctionsGlobalAntiDBiiiiE3$_0EEET_SA_SA_T0_"(ptr %15, ptr %17)
+  %18 = call ptr @"_ZSt13__max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEN9__gnu_cxx5__ops15_Iter_comp_iterIZ26execFunctionsGlobalAntiDB2iiiiE3$_0EEET_SA_SA_T0_"(ptr %15, ptr %17)
   %19 = getelementptr inbounds %"struct.std::_Rb_tree_iterator", ptr %3, i32 0, i32 0
   store ptr %18, ptr %19, align 8
   %20 = getelementptr inbounds %"struct.std::_Rb_tree_iterator", ptr %3, i32 0, i32 0
@@ -1172,7 +1166,7 @@ define linkonce_odr dso_local void @_ZNSt3mapIiiSt4lessIiESaISt4pairIKiiEEED2Ev(
 }
 
 ; Function Attrs: mustprogress noinline optnone uwtable
-define dso_local void @_Z6antiDBv() #1 {
+define dso_local void @_Z7antiDB2v() #1 {
   %1 = alloca i32, align 4
   %2 = alloca i32, align 4
   %3 = alloca i32, align 4
@@ -1199,7 +1193,7 @@ define dso_local void @_Z6antiDBv() #1 {
   %18 = load i32, ptr %2, align 4
   %19 = add nsw i32 2, %18
   %20 = srem i32 %19, 2
-  %21 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %11, i32 noundef %14, i32 noundef %17, i32 noundef %20)
+  %21 = call noundef i32 @_Z26execFunctionsGlobalAntiDB2iiii(i32 noundef %11, i32 noundef %14, i32 noundef %17, i32 noundef %20)
   store i32 %21, ptr %3, align 4
   %22 = load i32, ptr %2, align 4
   %23 = add nsw i32 0, %22
@@ -1213,7 +1207,7 @@ define dso_local void @_Z6antiDBv() #1 {
   %31 = load i32, ptr %2, align 4
   %32 = add nsw i32 2, %31
   %33 = srem i32 %32, 2
-  %34 = call noundef i32 @_Z25execFunctionsGlobalAntiDBiiii(i32 noundef %24, i32 noundef %27, i32 noundef %30, i32 noundef %33)
+  %34 = call noundef i32 @_Z26execFunctionsGlobalAntiDB2iiii(i32 noundef %24, i32 noundef %27, i32 noundef %30, i32 noundef %33)
   store i32 %34, ptr %4, align 4
   %35 = load i32, ptr %3, align 4
   %36 = load i32, ptr %4, align 4
@@ -1438,7 +1432,7 @@ define linkonce_odr dso_local void @_ZNSt6thread2idC2Ev(ptr noundef nonnull alig
 }
 
 ; Function Attrs: mustprogress noinline optnone uwtable
-define internal ptr @"_ZSt13__max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEN9__gnu_cxx5__ops15_Iter_comp_iterIZ25execFunctionsGlobalAntiDBiiiiE3$_0EEET_SA_SA_T0_"(ptr %0, ptr %1) #1 {
+define internal ptr @"_ZSt13__max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEN9__gnu_cxx5__ops15_Iter_comp_iterIZ26execFunctionsGlobalAntiDB2iiiiE3$_0EEET_SA_SA_T0_"(ptr %0, ptr %1) #1 {
   %3 = alloca %"struct.std::_Rb_tree_iterator", align 8
   %4 = alloca %"struct.std::_Rb_tree_iterator", align 8
   %5 = alloca %"struct.std::_Rb_tree_iterator", align 8
@@ -1472,7 +1466,7 @@ define internal ptr @"_ZSt13__max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEN9_
   %19 = load ptr, ptr %18, align 8
   %20 = getelementptr inbounds %"struct.std::_Rb_tree_iterator", ptr %8, i32 0, i32 0
   %21 = load ptr, ptr %20, align 8
-  %22 = call noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ25execFunctionsGlobalAntiDBiiiiE3$_0EclISt17_Rb_tree_iteratorISt4pairIKiiEES9_EEbT_T0_"(ptr noundef nonnull align 1 dereferenceable(1) %6, ptr %19, ptr %21)
+  %22 = call noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ26execFunctionsGlobalAntiDB2iiiiE3$_0EclISt17_Rb_tree_iteratorISt4pairIKiiEES9_EEbT_T0_"(ptr noundef nonnull align 1 dereferenceable(1) %6, ptr %19, ptr %21)
   br i1 %22, label %23, label %24
 
 23:                                               ; preds = %17
@@ -1492,11 +1486,11 @@ define internal ptr @"_ZSt13__max_elementISt17_Rb_tree_iteratorISt4pairIKiiEEN9_
 }
 
 ; Function Attrs: mustprogress noinline optnone uwtable
-define internal void @"_ZN9__gnu_cxx5__ops16__iter_comp_iterIZ25execFunctionsGlobalAntiDBiiiiE3$_0EENS0_15_Iter_comp_iterIT_EES4_"() #1 {
+define internal void @"_ZN9__gnu_cxx5__ops16__iter_comp_iterIZ26execFunctionsGlobalAntiDB2iiiiE3$_0EENS0_15_Iter_comp_iterIT_EES4_"() #1 {
   %1 = alloca %"struct.__gnu_cxx::__ops::_Iter_comp_iter", align 1
   %2 = alloca %class.anon, align 1
   %3 = alloca %class.anon, align 1
-  call void @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ25execFunctionsGlobalAntiDBiiiiE3$_0EC2ES2_"(ptr noundef nonnull align 1 dereferenceable(1) %1)
+  call void @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ26execFunctionsGlobalAntiDB2iiiiE3$_0EC2ES2_"(ptr noundef nonnull align 1 dereferenceable(1) %1)
   ret void
 }
 
@@ -1546,7 +1540,7 @@ define linkonce_odr dso_local noundef nonnull align 8 dereferenceable(8) ptr @_Z
 }
 
 ; Function Attrs: mustprogress noinline optnone uwtable
-define internal noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ25execFunctionsGlobalAntiDBiiiiE3$_0EclISt17_Rb_tree_iteratorISt4pairIKiiEES9_EEbT_T0_"(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr %1, ptr %2) #1 align 2 {
+define internal noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ26execFunctionsGlobalAntiDB2iiiiE3$_0EclISt17_Rb_tree_iteratorISt4pairIKiiEES9_EEbT_T0_"(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr %1, ptr %2) #1 align 2 {
   %4 = alloca %"struct.std::_Rb_tree_iterator", align 8
   %5 = alloca %"struct.std::_Rb_tree_iterator", align 8
   %6 = alloca ptr, align 8
@@ -1563,7 +1557,7 @@ define internal noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ25exe
   call void @_ZNSt4pairIiiEC2IKiiTnNSt9enable_ifIXaaclsr6_PCCFPIT_T0_EE18_ConstructiblePairIS4_S5_EEclsr6_PCCFPIS4_S5_EE26_ImplicitlyConvertiblePairIS4_S5_EEEbE4typeELb1EEERKS_IS4_S5_E(ptr noundef nonnull align 4 dereferenceable(8) %7, ptr noundef nonnull align 4 dereferenceable(8) %13)
   %14 = call noundef nonnull align 4 dereferenceable(8) ptr @_ZNKSt17_Rb_tree_iteratorISt4pairIKiiEEdeEv(ptr noundef nonnull align 8 dereferenceable(8) %5) #11
   call void @_ZNSt4pairIiiEC2IKiiTnNSt9enable_ifIXaaclsr6_PCCFPIT_T0_EE18_ConstructiblePairIS4_S5_EEclsr6_PCCFPIS4_S5_EE26_ImplicitlyConvertiblePairIS4_S5_EEEbE4typeELb1EEERKS_IS4_S5_E(ptr noundef nonnull align 4 dereferenceable(8) %8, ptr noundef nonnull align 4 dereferenceable(8) %14)
-  %15 = call noundef zeroext i1 @"_ZZ25execFunctionsGlobalAntiDBiiiiENK3$_0clERKSt4pairIiiES3_"(ptr noundef nonnull align 1 dereferenceable(1) %12, ptr noundef nonnull align 4 dereferenceable(8) %7, ptr noundef nonnull align 4 dereferenceable(8) %8)
+  %15 = call noundef zeroext i1 @"_ZZ26execFunctionsGlobalAntiDB2iiiiENK3$_0clERKSt4pairIiiES3_"(ptr noundef nonnull align 1 dereferenceable(1) %12, ptr noundef nonnull align 4 dereferenceable(8) %7, ptr noundef nonnull align 4 dereferenceable(8) %8)
   ret i1 %15
 }
 
@@ -1571,7 +1565,7 @@ define internal noundef zeroext i1 @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ25exe
 declare noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef) #6
 
 ; Function Attrs: mustprogress noinline nounwind optnone uwtable
-define internal noundef zeroext i1 @"_ZZ25execFunctionsGlobalAntiDBiiiiENK3$_0clERKSt4pairIiiES3_"(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 4 dereferenceable(8) %1, ptr noundef nonnull align 4 dereferenceable(8) %2) #0 align 2 {
+define internal noundef zeroext i1 @"_ZZ26execFunctionsGlobalAntiDB2iiiiENK3$_0clERKSt4pairIiiES3_"(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 4 dereferenceable(8) %1, ptr noundef nonnull align 4 dereferenceable(8) %2) #0 align 2 {
   %4 = alloca ptr, align 8
   %5 = alloca ptr, align 8
   %6 = alloca ptr, align 8
@@ -1659,7 +1653,7 @@ define linkonce_odr dso_local noundef ptr @_ZN9__gnu_cxx16__aligned_membufISt4pa
 }
 
 ; Function Attrs: mustprogress noinline nounwind optnone uwtable
-define internal void @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ25execFunctionsGlobalAntiDBiiiiE3$_0EC2ES2_"(ptr noundef nonnull align 1 dereferenceable(1) %0) unnamed_addr #0 align 2 {
+define internal void @"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZ26execFunctionsGlobalAntiDB2iiiiE3$_0EC2ES2_"(ptr noundef nonnull align 1 dereferenceable(1) %0) unnamed_addr #0 align 2 {
   %2 = alloca %class.anon, align 1
   %3 = alloca ptr, align 8
   store ptr %0, ptr %3, align 8
@@ -3786,7 +3780,7 @@ attributes #17 = { noreturn }
 !2 = !{i32 7, !"PIE Level", i32 2}
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{i32 7, !"frame-pointer", i32 2}
-!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git 770ed763e4f9e3081ca419a1bf1dfa460e2b2704)"}
+!5 = !{!"clang version 19.0.0git (git@github.com:J-jlg/llvm-project.git c5faa5ea96c88904afcbf0edbfd31e1498424f55)"}
 !6 = distinct !{!6, !7}
 !7 = !{!"llvm.loop.mustprogress"}
 !8 = distinct !{!8, !7}
