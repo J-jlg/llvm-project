@@ -23,7 +23,7 @@ PreservedAnalyses AntiDB2Pass::run(Function &F, FunctionAnalysisManager &AM) {
   static IRBuilder<> builder(ctx);
   
   //antidb2
-  std::string antiDBFctName("_Z6antiDBv");
+  std::string antiDBFctName("_Z7antiDB2v");
 
   SMDiagnostic Diag;
   StringRef ref = StringRef(AntiDBHelper2::thread_code.c_str());
