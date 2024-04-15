@@ -12,6 +12,7 @@ add_llvm_component_library(LLVMTransformUtils
   CanonicalizeAliases.cpp
   CanonicalizeFreezeInLoops.cpp
   CFF.cpp
+  ImmediateObfuscation.cpp
   CloneFunction.cpp
   CloneModule.cpp
   CodeExtractor.cpp

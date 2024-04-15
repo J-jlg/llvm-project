@@ -280,6 +280,7 @@
 #include "llvm/Transforms/Utils/LowerIFunc.h"
 #include "llvm/Transforms/Utils/LowerInvoke.h"
 #include "llvm/Transforms/Utils/LowerSwitch.h"
+#include "llvm/Transforms/Utils/ImmediateObfuscation.h"
 #include "llvm/Transforms/Utils/CFF.h"
 #include "llvm/Transforms/Utils/ThreadsObf.h"
 #include "llvm/Transforms/Utils/AntiDB.h"
